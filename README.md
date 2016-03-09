@@ -16,6 +16,6 @@ Pribehy:
 
 
 1. Faza:
-- moznost tazit suroviny:
+- moznost tazit suroviny
 - vymysliet co je to surovina
 - co je to budova, ake mam na vyber
