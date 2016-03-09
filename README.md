@@ -2,6 +2,9 @@
 
 https://waffle.io/veronka11/xpgame
 
+Metafora:
+Xpgame je hra, ktora otestuje tvoju schopnost ovladnut jednoduchy trh s komunikatami.
+
 Pribehy:
 
 - moznost tazit suroviny
