@@ -7,7 +7,7 @@ package xpgame;
 
 /**
  *
- * @author peto
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class XPgame {
 
