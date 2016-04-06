@@ -1,0 +1,71 @@
+{
+    "buildings": [
+        {
+            "name":         "Building Name",
+            "price":        [100, 100, 0, 0],
+            "productive" :  false,
+            "production" : [],
+            "upgrades": [
+                {
+                    "upgrade_name" :    "Upgrade Name",
+                    "upgrade_type" :    1,
+                    "upgrade_rate" :    1.2,
+                    "upgrade_level_increase" : 0.4
+                },
+                {
+                    "upgrade_name" :    "Upgrade Name2",
+                    "upgrade_type" :    2,
+                    "upgrade_rate" :    1.15,
+                    "upgrade_level_increase" : 0.2
+                }
+            ]
+            
+        },
+        {
+            "name":         "Building Name2",
+            "price":        [100, 0, 0, 0],
+            "productive" :  false,
+            "production" : [],
+            "upgrades": [
+                {
+                    "upgrade_name" :    "Upgrade Name",
+                    "upgrade_type" :    1,
+                    "upgrade_rate" :    1.2,
+                    "upgrade_level_increase" : 0.4
+                },
+                {
+                    "upgrade_name" :    "Upgrade Name2",
+                    "upgrade_type" :    2,
+                    "upgrade_rate" :    1.15,
+                    "upgrade_level_increase" : 0.2
+                }
+            ]
+            
+        },
+        {
+            "name":         "Building Name",
+            "price":        [100, 100, 0, 0],
+            "productive" :  true,
+            "production" : [10, 0, 0, 0],
+            "upgrades": [
+                {
+                    "upgrade_name" :    "Upgrade Name",
+                    "upgrade_type" :    1,
+                    "upgrade_rate" :    1.2,
+                    "upgrade_level_increase" : 0.4
+                },
+                {
+                    "upgrade_name" :    "Upgrade Name2",
+                    "upgrade_type" :    2,
+                    "upgrade_rate" :    1.15,
+                    "upgrade_level_increase" : 0.2
+                }
+            ]
+            
+        }
+    ],
+    
+    "otherUnits" : {
+        
+    }
+}
