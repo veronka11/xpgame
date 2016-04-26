@@ -9,6 +9,8 @@ import Buildings.GameBuildingController;
 import dataloader.JSONloader;
 import entity.Building;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,6 +21,7 @@ public class XPgame implements Runnable{
     private HashMap<Integer, Building> BuildingData;
     private final String path="structure.json";
     private GameBuildingController GBC;
+    public boolean running;
     
     public void XPgame(){
         init();
@@ -27,6 +30,10 @@ public class XPgame implements Runnable{
     public void createBuilding(int id){
     
     } 
+    
+    private void setRunning(boolean b){
+        this.running=b;
+    }
     
     private void init(){
         BuildingData = JSONloader.JSONloadBuildings(path);
@@ -39,12 +46,20 @@ public class XPgame implements Runnable{
     public static void main(String[] args) {
         XPgame game=new XPgame();
         game.init();
+        game.setRunning(true);
         game.run();
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while(running){
+            GBC.updateResources();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(XPgame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
     }
     
 }

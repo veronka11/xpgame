@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xpgame;
+package Buildings;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author peto
  */
-public class XPgameTest {
+public class GameBuildingControllerTest {
     
-    public XPgameTest() {
+    public GameBuildingControllerTest() {
     }
     
     @BeforeClass
@@ -38,50 +38,42 @@ public class XPgameTest {
     }
 
     /**
-     * Test of main method, of class XPgame.
-     */
-    @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        XPgame.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of XPgame method, of class XPgame.
-     */
-    @Test
-    public void testXPgame() {
-        System.out.println("XPgame");
-        XPgame instance = new XPgame();
-        instance.XPgame();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of createBuilding method, of class XPgame.
+     * Test of CreateBuilding method, of class GameBuildingController.
      */
     @Test
     public void testCreateBuilding() {
-        System.out.println("createBuilding");
+        System.out.println("CreateBuilding");
         int id = 0;
-        XPgame instance = new XPgame();
-        instance.createBuilding(id);
+        GameBuildingController instance = null;
+        instance.CreateBuilding(id);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of run method, of class XPgame.
+     * Test of isEnoughResources method, of class GameBuildingController.
      */
     @Test
-    public void testRun() {
-        System.out.println("run");
-        XPgame instance = new XPgame();
-        instance.run();
+    public void testIsEnoughResources() {
+        System.out.println("isEnoughResources");
+        int[] p = null;
+        GameBuildingController instance = null;
+        boolean expResult = false;
+        boolean result = instance.isEnoughResources(p);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of useResources method, of class GameBuildingController.
+     */
+    @Test
+    public void testUseResources() {
+        System.out.println("useResources");
+        int[] p = null;
+        GameBuildingController instance = null;
+        instance.useResources(p);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xpgame;
+package entity;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author peto
  */
-public class XPgameTest {
+public class BuildingUpgradeTest {
     
-    public XPgameTest() {
+    public BuildingUpgradeTest() {
     }
     
     @BeforeClass
@@ -38,50 +38,57 @@ public class XPgameTest {
     }
 
     /**
-     * Test of main method, of class XPgame.
+     * Test of getName method, of class BuildingUpgrade.
      */
     @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        XPgame.main(args);
+    public void testGetName() {
+        System.out.println("getName");
+        BuildingUpgrade instance = null;
+        String expResult = "";
+        String result = instance.getName();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of XPgame method, of class XPgame.
+     * Test of getType method, of class BuildingUpgrade.
      */
     @Test
-    public void testXPgame() {
-        System.out.println("XPgame");
-        XPgame instance = new XPgame();
-        instance.XPgame();
+    public void testGetType() {
+        System.out.println("getType");
+        BuildingUpgrade instance = null;
+        int expResult = 0;
+        int result = instance.getType();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of createBuilding method, of class XPgame.
+     * Test of getRate method, of class BuildingUpgrade.
      */
     @Test
-    public void testCreateBuilding() {
-        System.out.println("createBuilding");
-        int id = 0;
-        XPgame instance = new XPgame();
-        instance.createBuilding(id);
+    public void testGetRate() {
+        System.out.println("getRate");
+        BuildingUpgrade instance = null;
+        double expResult = 0.0;
+        double result = instance.getRate();
+        assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of run method, of class XPgame.
+     * Test of getLevelIncrease method, of class BuildingUpgrade.
      */
     @Test
-    public void testRun() {
-        System.out.println("run");
-        XPgame instance = new XPgame();
-        instance.run();
+    public void testGetLevelIncrease() {
+        System.out.println("getLevelIncrease");
+        BuildingUpgrade instance = null;
+        double expResult = 0.0;
+        double result = instance.getLevelIncrease();
+        assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
