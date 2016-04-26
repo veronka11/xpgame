@@ -1,7 +1,8 @@
 nbproject
 /build/
 /dist/
-*.idea
+<<<<<<< HEAD
+*.idea*
 out/
 *.json
 *.iml
