@@ -39,166 +39,126 @@ public class BuildingTest {
     }
 
     /**
-     * Test of addUpgrade method, of class Building.
+     * Building inicialization tests
      */
+
     @Test
-    public void testAddUpgrade() {
-        System.out.println("addUpgrade");
-        BuildingUpgrade upgradeData = null;
-        Building instance = null;
-        instance.addUpgrade(upgradeData);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInicializationWorks() {
+        Building b = new Building(1, "test_name");
+        assertTrue(b.getUpgrades().size() == 0);
     }
 
     /**
-     * Test of setPrice method, of class Building.
+     * toString tests
      */
+
     @Test
-    public void testSetPrice() {
-        System.out.println("setPrice");
-        int[] priceData = null;
-        Building instance = null;
-        instance.setPrice(priceData);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testToStringWithoutPriceRaisesError() {
+        Building b = new Building(1, "test_name");
+        try {
+            b.toString();
+            fail("Exception not thrown.");
+        }
+        catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testToStringWithoutUpgradesRaisesError() {
+        Building b = new Building(1, "test_name");
+        b.setPrice(new int[] {1, 2, 3, 4});
+        try {
+            b.toString();
+        }
+        catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            fail("Exceptio thrown.");
+        }
+    }
+
+    @Test
+    public void toStringReturnsCorrectOutput(){
+        Building b = new Building(1, "test_name");
+        b.setPrice(new int[]{1, 2, 3, 4});
+        b.setUpgrades(new ArrayList<>());
+        assertEquals("Building name:test_name| Price:1-2-3-4| Total Upgrades: 0", b.toString());
+    }
+
+    @Test
+    public void toStringReturnsCorrectOutput2(){
+        Building b = new Building(1, "test_name");
+        b.setPrice(new int[]{11, 22, 33, 44});
+        ArrayList<BuildingUpgrade> al = new ArrayList<BuildingUpgrade>();
+        al.add(new BuildingUpgrade("name", 1, 2, 3));
+        b.setUpgrades(al);
+        assertEquals("Building name:test_name| Price:11-22-33-44| Total Upgrades: 1", b.toString());
     }
 
     /**
-     * Test of setProduction method, of class Building.
+     * price setter tests
      */
+
     @Test
-    public void testSetProduction_boolean() {
-        System.out.println("setProduction");
-        boolean state = false;
-        Building instance = null;
-        instance.setProduction(state);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void priceDataForSettersCanBeOfSize4() {
+        Building b = new Building(1, "test_name");
+        b.setPrice(new int[]{1, 2, 3, 4});
+    }
+    @Test
+    public void priceDataForSettersCantBeSize3() {
+        Building b = new Building(1, "test_name");
+        try {
+            b.setPrice(new int[]{1, 2, 3});
+            fail("Exception not thrown.");
+        }
+        catch (Exception e){
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void priceDataForSettersCantBeSize2() {
+        Building b = new Building(1, "test_name");
+        b.setPrice(new int[]{1, 4});
+        try {
+            b.setPrice(new int[]{1, 2, 3});
+            fail("Exception not thrown.");
+        }
+        catch (Exception e){
+            assertTrue(true);
+        }
     }
 
     /**
-     * Test of setProduction method, of class Building.
+     * setProduction tests
      */
+
     @Test
-    public void testSetProduction_intArr() {
-        System.out.println("setProduction");
-        int[] productData = null;
-        Building instance = null;
-        instance.setProduction(productData);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void productionSetterSetsProductionFalseAsDefault() {
+        Building b = new Building(1, "name");
+        b.setProduction(true);
+        assertFalse(b.isProductive());
+        b.setProduction(false);
+        assertFalse(b.isProductive());
     }
 
-    /**
-     * Test of getId method, of class Building.
-     */
     @Test
-    public void testGetId() {
-        System.out.println("getId");
-        Building instance = null;
-        int expResult = 0;
-        int result = instance.getId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void productionSetterSetsProductionTrueIfGivenProductData() {
+        Building b = new Building(1, "name");
+        b.setProduction(new int[]{1, 1, 1, 1});
+        assertTrue(b.isProductive());
     }
 
-    /**
-     * Test of getName method, of class Building.
-     */
     @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Building instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void productivityDataCantBeOfLengthOtherThan4() {
+        Building b = new Building(1, "name");
+        try {
+            b.setProduction(new int[]{1, 1, 1});
+            b.setProduction(new int[]{1});
+            b.setProduction(new int[]{1, 3});
+            fail("Exception not thrown.");
+        }
+        catch (Exception e){
+            assertTrue(true);
+        }
     }
-
-    /**
-     * Test of getPrice method, of class Building.
-     */
-    @Test
-    public void testGetPrice() {
-        System.out.println("getPrice");
-        Building instance = null;
-        int[] expResult = null;
-        int[] result = instance.getPrice();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getProduction method, of class Building.
-     */
-    @Test
-    public void testGetProduction() {
-        System.out.println("getProduction");
-        Building instance = null;
-        int[] expResult = null;
-        int[] result = instance.getProduction();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isProductive method, of class Building.
-     */
-    @Test
-    public void testIsProductive() {
-        System.out.println("isProductive");
-        Building instance = null;
-        boolean expResult = false;
-        boolean result = instance.isProductive();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getUpgrades method, of class Building.
-     */
-    @Test
-    public void testGetUpgrades() {
-        System.out.println("getUpgrades");
-        Building instance = null;
-        ArrayList<BuildingUpgrade> expResult = null;
-        ArrayList<BuildingUpgrade> result = instance.getUpgrades();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setUpgrades method, of class Building.
-     */
-    @Test
-    public void testSetUpgrades() {
-        System.out.println("setUpgrades");
-        ArrayList<BuildingUpgrade> buildingUpgrades = null;
-        Building instance = null;
-        instance.setUpgrades(buildingUpgrades);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of toString method, of class Building.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        Building instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }

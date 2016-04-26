@@ -37,29 +37,5 @@ public class GameBuildingTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of setLevel method, of class GameBuilding.
-     */
-    @Test
-    public void testSetLevel() {
-        System.out.println("setLevel");
-        int level = 0;
-        GameBuilding instance = null;
-        instance.setLevel(level);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of run method, of class GameBuilding.
-     */
-    @Test
-    public void testRun() {
-        System.out.println("run");
-        GameBuilding instance = null;
-        instance.run();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }
