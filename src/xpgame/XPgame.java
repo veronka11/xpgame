@@ -5,17 +5,54 @@
  */
 package xpgame;
 
+import Buildings.GameBuildingController;
+import dataloader.JSONloader;
+import entity.Building;
+
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+
 /**
  *
  * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
-public class XPgame {
+public class XPgame implements Runnable{
+    
+    private HashMap<Integer, Building> BuildingData;
+    private final String path = "structure.json";
+    private GameBuildingController GBC;
+    
+    public void XPgame() throws GameInicializaitonFailedException {
+        init();
+    }
+    
+    public void createBuilding(int id){
+    
+    } 
+    
+    private void init() throws GameInicializaitonFailedException{
+        try {
+            BuildingData = JSONloader.JSONloadBuildings(path);
+            GBC = new GameBuildingController(BuildingData);
+        }
+        catch (FileNotFoundException e){
+            throw new GameInicializaitonFailedException(e.getMessage());
+        }
+    }
+    
+    /*
+        Vytvori sa instancia hry, nainicializuje sa a spusti sa Tread
+    */
+    public static void main(String[] args) throws GameInicializaitonFailedException {
+        XPgame game = new XPgame();
+        game.init();
+        game.run();
+    }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet.");
+        // To change body of generated methods, choose Tools | Templates.
     }
     
 }

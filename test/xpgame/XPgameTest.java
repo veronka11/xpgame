@@ -42,11 +42,14 @@ public class XPgameTest {
      */
     @Test
     public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        XPgame.main(args);
+        try {
+            String[] args = null;
+            XPgame.main(args);
+        }
+        catch (GameInicializaitonFailedException e){
+            fail("Game couldn't be initialized with the Exception: \n" + e.getMessage());
+        }
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

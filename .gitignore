@@ -1,1 +1,7 @@
 nbproject
+/build/
+/dist/
+*.idea
+out/
+*.json
+*.iml
