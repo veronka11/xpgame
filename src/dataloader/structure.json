@@ -19,7 +19,7 @@
             "name":         "Building Name",
             "price":        [100, 100, 0, 0],
             "productive" :  true,
-            "production" :  [],
+            "production" :  [100, 0, 0, 0],
             "upgrade": {
                 "upgrade_name" :    "Upgrade Name",
                 "upgrade_type" :    1,
