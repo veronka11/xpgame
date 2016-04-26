@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -27,18 +28,18 @@ public class JSONloader {
         JsonObject obj = jreader.readObject();
 
         // Building processing variables
+        int id;
         String name;
         boolean productivity;
         int[] price, production;
-        ArrayList<BuildingUpgrade> buildingUpgrades;
         BuildingUpgrade tempBuildingUpgrade;
 
         // Buildings
-        int id = 0;
         JsonArray buildings = obj.getJsonArray("buildings");
         for (JsonObject building : buildings.getValuesAs(JsonObject.class)) {
             // Name
             name = building.getString("name");
+            id = building.getInt("id");
 
             // Instance
             Building tempBuilding = new Building(id, name);
@@ -65,25 +66,29 @@ public class JSONloader {
             }
 
             // BuildingUpgrades
-            buildingUpgrades = new ArrayList<>();
-            JsonArray tempUpgrades = building.getJsonArray("upgrades");
-            for (JsonObject upgr : tempUpgrades.getValuesAs(JsonObject.class)) {
-                tempBuildingUpgrade = new BuildingUpgrade(upgr.getString("upgrade_name"), upgr.getInt("upgrade_type"), Double.valueOf(upgr.get("upgrade_rate").toString()), Double.valueOf(upgr.get("upgrade_level_increase").toString()));
-                buildingUpgrades.add(tempBuildingUpgrade);
-            }
-            tempBuilding.setUpgrades(buildingUpgrades);
+            JsonObject tempUpgrade = (JsonObject) building.get("upgrade");
+            tempBuildingUpgrade = new BuildingUpgrade(tempUpgrade.getString("upgrade_name"),
+                                                        tempUpgrade.getInt("upgrade_type"),
+                                                        Double.valueOf(tempUpgrade.get("upgrade_rate").toString()),
+                                                        Double.valueOf(tempUpgrade.get("upgrade_level_increase").toString())
+                                                        );
+            tempBuilding.setUpgrade(tempBuildingUpgrade);
 
             // ----------------------------
             // Add building
             data.put(id, tempBuilding);
-            id++;
         }
         return data;
     }
 
     // Main
     public static void main(String[] args) {
-//        JSONloader.JSONloadBuildings("/Users/newnew/NetBeansProjects/xpgame/XPgame/src/dataloader/structure.json");
+        try {
+            JSONloader.JSONloadBuildings("/Users/newnew/IdeaProjects/xpgame/src/dataloader/structure.json");
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        }
+
     }
     
     
