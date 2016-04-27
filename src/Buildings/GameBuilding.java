@@ -13,7 +13,7 @@ public class GameBuilding{
     public double upgradeRate;
     public double upgradeLevelIncrease;
     public boolean isProductive;
-    public int type;
+    public int id;
     public int people;
     public int[] price, production;
     
@@ -22,7 +22,7 @@ public class GameBuilding{
     budovy tak uchovavaju len data a celu logiku vykonava BuildingController
     */
     GameBuilding(Building data, int id) {
-        type = id;
+        this.id = id;
         level = 0;
         people = 0;
         Name = data.getName();
@@ -69,13 +69,13 @@ public class GameBuilding{
         return people * upgradeRate;
     }
 
-    int getType() {
-        return type;
+    int getId() {
+        return this.id;
     }
 
     int[] getPriceForNextLvl() {
         int[] p = {0, 0, 0, 0};
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < price.length; i++){
             p[i] = price[i] * (level + 1);
         }
         return p;

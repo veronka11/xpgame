@@ -68,7 +68,11 @@ public class JSONloader {
             }
 
             // End of Array Buildings and closing object }
-            gen.writeEnd().writeEnd();
+            gen.writeEnd();
+
+            // TODO: Game status - commodities
+
+            gen.writeEnd();
             gen.close();
         } catch (IOException e) {
             return false;
