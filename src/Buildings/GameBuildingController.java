@@ -14,28 +14,52 @@ public  class GameBuildingController {
     private double wood;
     private int people;
     private int workingPeople;
-    
+
     /*
-    zaciatok hry, inicializuju sa zdroje, vytvori sa jeden dom aby boli ludia? sa moze zmenit 
+    zaciatok hry, inicializuju sa zdroje
     */
     public GameBuildingController(HashMap<Integer, Building> BuildingData) {
-        this.BuildingData=BuildingData;
-        workingPeople=0;
-        people=0;
-        food=100;
-        gold=100;
-        stone=100;
-        wood=100;
-        this.CreateBuilding(4);
+        this.BuildingData = BuildingData;
+        Buildings = new HashMap<>();
+        workingPeople = 0;
+        people = 10;
+        food = 100;
+        gold = 100;
+        stone = 100;
+        wood = 100;
     }
-    
+
+    public double getFood() {
+        return food;
+    }
+
+    public double getGold() {
+        return gold;
+    }
+
+    public double getStone() {
+        return stone;
+    }
+
+    public double getWood() {
+        return wood;
+    }
+
+    public int getPeople() {
+        return people;
+    }
+
+    public int getWorkingPeople() {
+        return workingPeople;
+    }
+
     /*
-        najprv zisti ci je dostatok zdrojov a potom vytvori budovu, budova je najprv przdna bez ludi
+       najprv zisti ci je dostatok zdrojov a potom vytvori budovu, budova je najprv przdna bez ludi
     */
     public final void CreateBuilding(int id){
         GameBuilding TempBuilding;
         Building BD = BuildingData.get(id);
-        if(isEnoughResources(BD.getPrice())){
+        if(isEnoughResources(BD.getPrice())) {
             TempBuilding = new GameBuilding(BuildingData.get(id), id);
             Buildings.put(Buildings.size(), TempBuilding);
             useResources(BD.getPrice());
@@ -60,55 +84,57 @@ public  class GameBuildingController {
     MAYBE NOT THREAD SAFE
     */
     public void updateResources(){
-        int peopleCount=0;
-        int peopleWorkingCount=0;
+        int peopleCount = 0;
+        int peopleWorkingCount = 0;
         for (Map.Entry<Integer, GameBuilding> entry : Buildings.entrySet()) {
             GameBuilding building = entry.getValue();
             int type= building.getType();
             switch(type){
                 case 0:       
-                    food+=building.collect();
+                    food += building.collect();
                     peopleWorkingCount+=building.getWorkers();
                     break;
                 case 1:
-                    gold+=building.collect();
-                    peopleWorkingCount+=building.getWorkers();
+                    gold += building.collect();
+                    peopleWorkingCount += building.getWorkers();
                     break;
                 case 2:
-                    stone+=building.collect();
-                    peopleWorkingCount+=building.getWorkers();
+                    stone += building.collect();
+                    peopleWorkingCount += building.getWorkers();
                     break;
                 case 3:
-                    wood+=building.collect();
+                    wood += building.collect();
                     peopleWorkingCount+=building.getWorkers();
                     break;
                 case 4: 
-                    people+=building.collect();
+                    people += building.collect();
                     break;
             }
         }
-        people=peopleCount;
-        workingPeople=peopleWorkingCount;
-        
-        printResourcesStatus();
+        people = peopleCount;
+        workingPeople = peopleWorkingCount;
     }
     
     /*
        prida pracovnika k budove
     */
     public void addWorker(int id){
-        if((people-workingPeople)>0){
+        if((people - workingPeople) > 0){
             Buildings.get(id).addWorker();
             workingPeople++;
         }
     }
-    
+
+    public String toString(){
+        return "Food: " + food + ", "+
+               "Gold: " + gold + ", "+
+               "Stone: " + stone + ", "+
+               "Wood: " + wood;
+    }
+
     public void printResourcesStatus(){
         System.out.println(
-            "Food: "+food+", "+
-            "Gold: "+gold+", "+
-            "Stone: "+stone+", "+
-            "Wood: "+wood
+            toString()
         );
     }
     
@@ -124,16 +150,16 @@ public  class GameBuildingController {
         if(p.length!=4){
             return false;
         }
-        else if(p[0]<food){
+        else if(p[0]>food){
             return false;
         }
-        else if(p[1]<gold){
+        else if(p[1]>gold){
             return false;
         }
-        else if(p[2]<stone){
+        else if(p[2]>stone){
             return false;
         }
-        else if(p[3]<wood){
+        else if(p[3]>wood){
             return false;
         }
         return true;
@@ -144,9 +170,9 @@ public  class GameBuildingController {
         if(p.length!=4){
             return;
         }
-        food-=p[0];
-        gold-=p[1];
-        stone-=p[2];
-        wood-=p[3];
+        food -= p[0];
+        gold -= p[1];
+        stone -= p[2];
+        wood -= p[3];
     }    
 }
