@@ -15,7 +15,7 @@ public class GameBuilding{
     public boolean isProductive;
     public int type;
     public int people;
-    public int[] price;
+    public int[] price, production;
     
     /*
     cela trieda upravena tak aby nebolo nutne pamatat si rodicovsky BuildingController
@@ -30,10 +30,11 @@ public class GameBuilding{
         upgradeLevelIncrease = data.getUpgrade().getLevelIncrease();
         upgradeRate = data.getUpgrade().getRate();
         isProductive = data.isProductive();
+        production = data.getProduction();
     }
     
     public void setLevel(int level){
-        this.level=level;
+        this.level = level;
     }
     
     public void upLevel(){
@@ -78,5 +79,13 @@ public class GameBuilding{
             p[i] = price[i] * (level + 1);
         }
         return p;
+    }
+
+    public int[] getProduction() {
+        return production;
+    }
+
+    public boolean isProductive() {
+        return isProductive;
     }
 }

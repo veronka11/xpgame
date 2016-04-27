@@ -1,5 +1,7 @@
 package entity;
 
+import xpgame.Commodity;
+
 import java.util.ArrayList;
 
 public class Building {
@@ -53,7 +55,12 @@ public class Building {
     }
     
     public String toString() {
-        return ("Building name:" + this.name + "| Price:" + this.price[0] + "-" + this.price[1] + "-" + this.price[2] + "-" + this.price[3] + "| Upgrade: " + this.upgrade.getName());
+        return ("Building name:" + this.name +
+                "| Price:" + this.price[Commodity.FOOD.ordinal()] +
+                "-" + this.price[Commodity.GOLD.ordinal()] +
+                "-" + this.price[Commodity.STONE.ordinal()] +
+                "-" + this.price[Commodity.WOOD.ordinal()] +
+                "| Upgrade: " + this.upgrade.getName());
     }
 
     public void setUpgrade(BuildingUpgrade tempBuildingUpgrade) {

@@ -65,10 +65,10 @@ public  class GameBuildingController {
     }
 
     public String toString(){
-        return "Food: " + getFood() + ", "+
-                "Gold: " + getGold() + ", "+
-                "Stone: " + getStone() + ", "+
-                "Wood: " + getWood();
+        return "Food: " + getFood() + ", " +
+               "Gold: " + getGold() + ", " +
+               "Stone: " + getStone() + ", " +
+               "Wood: " + getWood();
     }
 
     public void printResourcesStatus(){
@@ -102,35 +102,15 @@ public  class GameBuildingController {
     MAYBE NOT THREAD SAFE
     */
     public void updateResources(){
-        int peopleCount = 0;
-        int peopleWorkingCount = 0;
-        for (Map.Entry<Integer, GameBuilding> entry : Buildings.entrySet()) {
-            GameBuilding building = entry.getValue();
-            int type= building.getType();
-            switch(type){
-                case 0:       
-                    addFood(building.collect());
-                    peopleWorkingCount+=building.getWorkers();
-                    break;
-                case 1:
-                    addGold(building.collect());
-                    peopleWorkingCount += building.getWorkers();
-                    break;
-                case 2:
-                    addStone(building.collect());
-                    peopleWorkingCount += building.getWorkers();
-                    break;
-                case 3:
-                    addWood(building.collect());
-                    peopleWorkingCount+=building.getWorkers();
-                    break;
-                case 4: 
-                    people += building.collect();
-                    break;
+        for (GameBuilding building : Buildings.values()) {
+            if (building.isProductive()) {
+                int[] producedCommodities = building.getProduction();
+                addFood(producedCommodities[Commodity.FOOD.ordinal()]);
+                addGold(producedCommodities[Commodity.GOLD.ordinal()]);
+                addStone(producedCommodities[Commodity.STONE.ordinal()]);
+                addWood(producedCommodities[Commodity.WOOD.ordinal()]);
             }
         }
-        people = peopleCount;
-        workingPeople = peopleWorkingCount;
     }
 
     public void addWorker(int id){
@@ -147,19 +127,19 @@ public  class GameBuildingController {
 
     public boolean isEnoughResources(int[] price) {
         return (price.length == 4 &&
-                price[0] <= getFood() &&
-                price[1] <= getGold() &&
-                price[2] <= getStone() &&
-                price[3] <= getWood());
+                price[Commodity.FOOD.ordinal()] <= getFood() &&
+                price[Commodity.GOLD.ordinal()] <= getGold() &&
+                price[Commodity.STONE.ordinal()] <= getStone() &&
+                price[Commodity.WOOD.ordinal()] <= getWood());
     }
 
     public void useResources(int[] price){
         if(price.length != 4){
             return;
         }
-        useFood(price[0]);
-        useGold(price[1]);
-        useStone(price[2]);
-        useWood(price[3]);
+        useFood(price[Commodity.FOOD.ordinal()]);
+        useGold(price[Commodity.GOLD.ordinal()]);
+        useStone(price[Commodity.STONE.ordinal()]);
+        useWood(price[Commodity.WOOD.ordinal()]);
     }    
 }
