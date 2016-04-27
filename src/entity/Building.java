@@ -20,15 +20,15 @@ public class Building {
     }
     
     public void setPrice(int[] priceData) {
-        this.price = priceData;
+        this.price = priceData; // TODO throw exception if price data is not length 4
     }
     
     public void setProduction(boolean state) {
-        this.productivity = false;
+        this.productivity = false; // TODO remove state parameter, or use it
     }
     
     public void setProduction(int[] productData) {
-        this.production = productData;
+        this.production = productData; // TODO throw exception if product data is not length 4
         this.productivity = true;
     }
 

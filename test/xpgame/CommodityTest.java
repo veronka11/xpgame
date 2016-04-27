@@ -10,9 +10,9 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author peto
+ * @author ondrej
  */
-public class XPgameTest {
+public class CommodityTest {
     @Test
     public void nothing() {
         assertTrue(true);

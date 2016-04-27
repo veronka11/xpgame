@@ -5,16 +5,14 @@
  */
 package xpgame;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  *
- * @author peto
+ * @author ondrej
  */
-public class XPgameTest {
-    @Test
-    public void nothing() {
-        assertTrue(true);
-    }
+@RunWith(Suite.class)
+@Suite.SuiteClasses({xpgame.XPgameTest.class, xpgame.CommodityTest.class})
+public class XpgameSuite {
 }
