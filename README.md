@@ -19,11 +19,10 @@ Pribehy:
 
 
 1. Faza:
-- moznost tazit suroviny
-- vymysliet co je to surovina
-- co je to budova, ake mam na vyber
- 
+ - moznost tazit suroviny
+ - vymysliet co je to surovina
+ - co je to budova, ake mam na vyber
 
 2. Faza:
-- funkcna mechanika hry
-- ukladanie/ nacitanie hry
+ - funkcna mechanika hry
+ - ukladanie/ nacitanie hry
