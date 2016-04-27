@@ -14,8 +14,12 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author peto
+ * @author ondrej
  */
 public class GameBuildingControllerTest {
 
+    @Test
+    public void nothing() {
+        assertTrue(true);
+    }
 }
