@@ -6,37 +6,14 @@
 package entity;
 
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author peto
+ * @author ondrej
  */
 public class BuildingTest {
-    
-    public BuildingTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Building inicialization tests
@@ -103,6 +80,7 @@ public class BuildingTest {
         Building b = new Building(1, "test_name");
         b.setPrice(new int[]{1, 2, 3, 4});
     }
+
     @Test
     public void priceDataForSettersCantBeSize3() {
         Building b = new Building(1, "test_name");

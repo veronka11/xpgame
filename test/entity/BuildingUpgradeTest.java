@@ -5,92 +5,54 @@
  */
 package entity;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author peto
+ * @author ondrej
  */
 public class BuildingUpgradeTest {
-    
-    public BuildingUpgradeTest() {
+    /**
+     * basic initialization tests
+     */
+
+    @Test
+    public void testInitializationWithCorrectValuesIsSuccessful() {
+        new BuildingUpgrade("test_name", 1, 1.0, 1.2);
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
+
+    @Test
+    public void testInitializationThrowsErrorIfNameIsNull() {
+        try {
+            new BuildingUpgrade(null, 1, 1.0, 1.2);
+            fail("Exception not thrown.");
+        }
+        catch (Exception e) {
+            assertTrue(true);
+        }
     }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+
+    @Test
+    public void testInitializationThrowsErrorIfNameIsEmptyString() {
+        try {
+            new BuildingUpgrade("", 1, 1.0, 1.2);
+            fail("Exception not thrown.");
+        }
+        catch (Exception e) {
+            assertTrue(true);
+        }
     }
 
     /**
-     * Test of getName method, of class BuildingUpgrade.
+     * basic getters tests
      */
-    @Test
-    public void testGetName() {
-        System.out.println("getName");
-        BuildingUpgrade instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of getType method, of class BuildingUpgrade.
-     */
     @Test
-    public void testGetType() {
-        System.out.println("getType");
-        BuildingUpgrade instance = null;
-        int expResult = 0;
-        int result = instance.getType();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGettersWork() {
+        BuildingUpgrade bu = new BuildingUpgrade("test_name", 1, 1.0, 1.2);
+        assertEquals("test_name", bu.getName());
+        assertEquals(1, bu.getType());
+        assertEquals(1.0, bu.getRate(), 0.01);
+        assertEquals(1.2, bu.getLevelIncrease(), 0.01);
     }
-
-    /**
-     * Test of getRate method, of class BuildingUpgrade.
-     */
-    @Test
-    public void testGetRate() {
-        System.out.println("getRate");
-        BuildingUpgrade instance = null;
-        double expResult = 0.0;
-        double result = instance.getRate();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getLevelIncrease method, of class BuildingUpgrade.
-     */
-    @Test
-    public void testGetLevelIncrease() {
-        System.out.println("getLevelIncrease");
-        BuildingUpgrade instance = null;
-        double expResult = 0.0;
-        double result = instance.getLevelIncrease();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }
