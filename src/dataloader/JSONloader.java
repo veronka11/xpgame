@@ -2,19 +2,85 @@ package dataloader;
 
 import entity.Building;
 import entity.BuildingUpgrade;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import xpgame.Commodity;
+
+import java.io.*;
+import java.util.*;
+import javax.json.*;
+import javax.json.stream.JsonGenerationException;
+import javax.json.stream.JsonGenerator;
 
 public class JSONloader {
-    
+
+    private final static String PATH_TO_SAVE = System.getProperty("user.dir") + "/savedata";
+
+    public static  boolean JSONsaveBuildings(HashMap<Integer, Building> data) {
+        System.out.println(PATH_TO_SAVE);
+        System.out.println(Commodity.FOOD.ordinal());
+
+        // Init stream writers
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(PATH_TO_SAVE + "test.json");
+
+            JsonGenerator gen = Json.createGenerator(writer);
+
+            gen.writeStartObject().writeStartArray("buildings");
+
+            // Building data
+            Building tempBuilding;
+            Iterator it = data.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                tempBuilding = (Building)pair.getValue();
+
+                gen.writeStartObject()
+                        .write("id", tempBuilding.getId())
+                        .write("name", tempBuilding.getName())
+                        .writeStartArray("price")
+                            .write(tempBuilding.getPrice()[Commodity.FOOD.ordinal()])
+                            .write(tempBuilding.getPrice()[Commodity.GOLD.ordinal()])
+                            .write(tempBuilding.getPrice()[Commodity.STONE.ordinal()])
+                            .write(tempBuilding.getPrice()[Commodity.WOOD.ordinal()])
+                        .writeEnd()
+                        .write("productive", tempBuilding.isProductive());
+
+
+                if (tempBuilding.isProductive()) {
+                    gen.writeStartArray("production")
+                            .write(tempBuilding.getProduction()[Commodity.FOOD.ordinal()])
+                            .write(tempBuilding.getProduction()[Commodity.GOLD.ordinal()])
+                            .write(tempBuilding.getProduction()[Commodity.STONE.ordinal()])
+                            .write(tempBuilding.getProduction()[Commodity.WOOD.ordinal()])
+                        .writeEnd();
+                } else {
+                    gen.writeStartArray("production").writeEnd();
+                }
+
+                gen.writeStartObject("upgrade")
+                        .write("upgrade_name", tempBuilding.getUpgrade().getName())
+                        .write("upgrade_type", tempBuilding.getUpgrade().getType())
+                        .write("upgrade_rate", tempBuilding.getUpgrade().getRate())
+                        .write("upgrade_level_increase", tempBuilding.getUpgrade().getLevelIncrease())
+                    .writeEnd()
+                .writeEnd();
+
+            }
+
+            // End of Array Buildings and closing object }
+            gen.writeEnd().writeEnd();
+            gen.close();
+        } catch (IOException e) {
+            return false;
+        } catch (JsonGenerationException jge) {
+            return false;
+        } catch (JsonException je) {
+            return false;
+        }
+
+        return true;
+    }
+
     public static HashMap<Integer, Building> JSONloadBuildings(String path) throws FileNotFoundException {
         // Result variables
         HashMap<Integer, Building> data = new HashMap<Integer, Building>();
@@ -27,18 +93,18 @@ public class JSONloader {
         JsonObject obj = jreader.readObject();
 
         // Building processing variables
+        int id;
         String name;
         boolean productivity;
         int[] price, production;
-        ArrayList<BuildingUpgrade> buildingUpgrades;
         BuildingUpgrade tempBuildingUpgrade;
 
         // Buildings
-        int id = 0;
         JsonArray buildings = obj.getJsonArray("buildings");
         for (JsonObject building : buildings.getValuesAs(JsonObject.class)) {
             // Name
             name = building.getString("name");
+            id = building.getInt("id");
 
             // Instance
             Building tempBuilding = new Building(id, name);
@@ -65,25 +131,32 @@ public class JSONloader {
             }
 
             // BuildingUpgrades
-            buildingUpgrades = new ArrayList<>();
-            JsonArray tempUpgrades = building.getJsonArray("upgrades");
-            for (JsonObject upgr : tempUpgrades.getValuesAs(JsonObject.class)) {
-                tempBuildingUpgrade = new BuildingUpgrade(upgr.getString("upgrade_name"), upgr.getInt("upgrade_type"), Double.valueOf(upgr.get("upgrade_rate").toString()), Double.valueOf(upgr.get("upgrade_level_increase").toString()));
-                buildingUpgrades.add(tempBuildingUpgrade);
-            }
-            tempBuilding.setUpgrades(buildingUpgrades);
+            JsonObject tempUpgrade = (JsonObject) building.get("upgrade");
+            tempBuildingUpgrade = new BuildingUpgrade(tempUpgrade.getString("upgrade_name"),
+                                                        tempUpgrade.getInt("upgrade_type"),
+                                                        Double.valueOf(tempUpgrade.get("upgrade_rate").toString()),
+                                                        Double.valueOf(tempUpgrade.get("upgrade_level_increase").toString())
+                                                        );
+            tempBuilding.setUpgrade(tempBuildingUpgrade);
 
             // ----------------------------
             // Add building
             data.put(id, tempBuilding);
-            id++;
+            //System.out.println(tempBuilding);
         }
         return data;
     }
 
     // Main
     public static void main(String[] args) {
-//        JSONloader.JSONloadBuildings("/Users/newnew/NetBeansProjects/xpgame/XPgame/src/dataloader/structure.json");
+        try {
+            HashMap<Integer, Building> hm = JSONloader.JSONloadBuildings("/Users/newnew/IdeaProjects/xpgame/src/dataloader/structure.json");
+            //HashMap<Integer, Building> hm = JSONloader.JSONloadBuildings("/Users/newnew/IdeaProjects/xpgame/savedatatest.json");
+            //JSONloader.JSONsaveBuildings(hm);
+        } catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
+        }
+
     }
     
     

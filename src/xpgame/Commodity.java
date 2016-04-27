@@ -10,5 +10,5 @@ package xpgame;
  * @author peto
  */
 public enum Commodity {
-    GOLD, STONE, FOOD, WOOD;
+    FOOD, GOLD, STONE, WOOD;
 }
