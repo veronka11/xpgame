@@ -19,5 +19,5 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({Buildings.GameBuildingControllerTest.class, Buildings.GameBuildingTest.class})
 public class BuildingsSuite {
-    
+
 }

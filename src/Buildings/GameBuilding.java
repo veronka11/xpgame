@@ -22,14 +22,14 @@ public class GameBuilding{
     budovy tak uchovavaju len data a celu logiku vykonava BuildingController
     */
     GameBuilding(Building data, int id) {
-        type=id;
-        level=0;
-        people=0;
-        Name=data.getName();
-        price=data.getPrice();
-        upgradeLevelIncrease=data.getUpgrades().get(0).getLevelIncrease();
-        upgradeRate=data.getUpgrades().get(0).getRate();
-        isProductive=data.isProductive();
+        type = id;
+        level = 0;
+        people = 0;
+        Name = data.getName();
+        price = data.getPrice();
+        upgradeLevelIncrease = data.getUpgrades().get(0).getLevelIncrease();
+        upgradeRate = data.getUpgrades().get(0).getRate();
+        isProductive = data.isProductive();
     }
     
     public void setLevel(int level){
@@ -38,7 +38,7 @@ public class GameBuilding{
     
     public void upLevel(){
         level++;
-        upgradeRate+=upgradeLevelIncrease;
+        upgradeRate += upgradeLevelIncrease;
     }
     
     public int getWorkers(){
@@ -48,32 +48,34 @@ public class GameBuilding{
     public void addWorker(){
         people++;
     }
+
+    public void removeWorker() {
+        people--;
+    }
     
     public void takeWorker() throws Exception{
-        if(people==0){
-            throw new Exception();
+        if(getWorkers() == 0){
+            throw new Exception(); // TODO add custom exception
         }
-        people--;
+        removeWorker();
     }
     
     double collect() {
         if(!isProductive){
-            //TODO exception?
+            // TODO add custom exception
             return upgradeRate;
         }
-        return people*upgradeRate;
+        return people * upgradeRate;
     }
 
     int getType() {
         return type;
     }
 
-    //vypocita cenu z povodnej ceny * level
-    // nwm ci to takto chceme
     int[] getPriceForNextLvl() {
-        int[] p = {0,0,0,0};
-        for(int i=0; i<4; i++){
-            p[i] = price[i]*(level+1);
+        int[] p = {0, 0, 0, 0};
+        for(int i = 0; i < 4; i++){
+            p[i] = price[i] * (level + 1);
         }
         return p;
     }
