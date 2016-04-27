@@ -116,7 +116,7 @@ public class GameBuildingControllerTest {
     public void testCreateBuildingUsesResources() {
         BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
         Building b = new Building(1, "test_name");
-        b.addUpgrade(bu);
+        b.setUpgrade(bu);
         b.setPrice(new int[]{1, 1, 1, 1});
         HashMap<Integer, Building> building_data = new HashMap<>();
         building_data.put(0, b);
@@ -134,7 +134,7 @@ public class GameBuildingControllerTest {
     public void testAddWorkerWorksAndDoesNotGoToNegativeNumbers() {
         BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
         Building b = new Building(1, "test_name");
-        b.addUpgrade(bu);
+        b.setUpgrade(bu);
         b.setPrice(new int[]{1, 1, 1, 1});
         HashMap<Integer, Building> building_data = new HashMap<>();
         building_data.put(0, b);

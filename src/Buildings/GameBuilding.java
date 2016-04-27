@@ -27,8 +27,8 @@ public class GameBuilding{
         people = 0;
         Name = data.getName();
         price = data.getPrice();
-        upgradeLevelIncrease = data.getUpgrades().get(0).getLevelIncrease();
-        upgradeRate = data.getUpgrades().get(0).getRate();
+        upgradeLevelIncrease = data.getUpgrade().getLevelIncrease();
+        upgradeRate = data.getUpgrade().getRate();
         isProductive = data.isProductive();
     }
     

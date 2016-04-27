@@ -20,9 +20,9 @@ public class BuildingTest {
      */
 
     @Test
-    public void testInicializationWorks() {
+    public void testInitializationWorks() {
         Building b = new Building(1, "test_name");
-        assertTrue(b.getUpgrades().size() == 0);
+        assertFalse(b.getUpgrade() == null);
     }
 
     /**
@@ -49,7 +49,7 @@ public class BuildingTest {
             b.toString();
         }
         catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            fail("Exceptio thrown.");
+            fail("Unexpected exception thrown.");
         }
     }
 
@@ -57,8 +57,8 @@ public class BuildingTest {
     public void toStringReturnsCorrectOutput(){
         Building b = new Building(1, "test_name");
         b.setPrice(new int[]{1, 2, 3, 4});
-        b.setUpgrades(new ArrayList<>());
-        assertEquals("Building name:test_name| Price:1-2-3-4| Total Upgrades: 0", b.toString());
+        b.setUpgrade(new BuildingUpgrade("MYNAME", 1, 2, 3));
+        assertEquals("Building name:test_name| Price:1-2-3-4| Upgrade: MYNAME", b.toString());
     }
 
     @Test
@@ -66,9 +66,8 @@ public class BuildingTest {
         Building b = new Building(1, "test_name");
         b.setPrice(new int[]{11, 22, 33, 44});
         ArrayList<BuildingUpgrade> al = new ArrayList<BuildingUpgrade>();
-        al.add(new BuildingUpgrade("name", 1, 2, 3));
-        b.setUpgrades(al);
-        assertEquals("Building name:test_name| Price:11-22-33-44| Total Upgrades: 1", b.toString());
+        b.setUpgrade(new BuildingUpgrade("name", 1, 2, 3));
+        assertEquals("Building name:test_name| Price:11-22-33-44| Upgrade: name", b.toString());
     }
 
     /**

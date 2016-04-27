@@ -26,7 +26,7 @@ public class GameBuildingTest {
 
 
         correct_b = new Building(2, "test_name2");
-        correct_b.addUpgrade(bu);
+        correct_b.setUpgrade(bu);
         correct_b.setPrice(new int[] {1, 2, 3, 4});
     }
 
@@ -48,7 +48,7 @@ public class GameBuildingTest {
     @Test
     public void testInitializationWorksForPopulatedBuildingData() {
         try {
-            b.addUpgrade(bu);
+            b.setUpgrade(bu);
             new GameBuilding(b, 1);
         }
         catch (Exception e){
@@ -80,7 +80,7 @@ public class GameBuildingTest {
     public void testUpLevelUpsRate() {
         bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
         b = new Building(1, "test_name");
-        b.addUpgrade(bu);
+        b.setUpgrade(bu);
         GameBuilding gb = new GameBuilding(b, 1);
 
         assertEquals(2, gb.upgradeRate, 0.01);
@@ -92,7 +92,7 @@ public class GameBuildingTest {
     public void testUpLevelUpsRate2() {
         bu = new BuildingUpgrade("test_upgrade2", 1, 23, 2);
         b = new Building(1, "test_name2");
-        b.addUpgrade(bu);
+        b.setUpgrade(bu);
         GameBuilding gb = new GameBuilding(b, 2);
 
         assertEquals(23, gb.upgradeRate, 0.01);
@@ -134,7 +134,7 @@ public class GameBuildingTest {
     @Test
     public void getPriceForNextLevelThrowsExceptionIfPriceIsNotSet() throws Exception {
         bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
-        b.addUpgrade(bu);
+        b.setUpgrade(bu);
         GameBuilding bg = new GameBuilding(b, 1);
 
         try {
