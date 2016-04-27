@@ -1,61 +1,82 @@
 package Buildings;
 
 import entity.Building;
+import xpgame.Commodity;
 import java.util.HashMap;
 import java.util.Map;
 
 public  class GameBuildingController {
-    
     private final HashMap<Integer, Building> BuildingData;
     private HashMap<Integer, GameBuilding> Buildings;
-    private double food;
-    private double gold;
-    private double stone;
-    private double wood;
-    private int people;
-    private int workingPeople;
+    private HashMap<Commodity, Double> resourcesMap;
+    private int people, workingPeople;
 
-    /*
-    zaciatok hry, inicializuju sa zdroje
-    */
     public GameBuildingController(HashMap<Integer, Building> BuildingData) {
         this.BuildingData = BuildingData;
         Buildings = new HashMap<>();
         workingPeople = 0;
         people = 10;
-        food = 100;
-        gold = 100;
-        stone = 100;
-        wood = 100;
+        resourcesMap = new HashMap<>();
+        for(Commodity c : Commodity.values()){
+            resourcesMap.put(c, 100.0);
+        }
     }
-
     public double getFood() {
-        return food;
+        return resourcesMap.get(Commodity.FOOD);
     }
-
     public double getGold() {
-        return gold;
+        return resourcesMap.get(Commodity.GOLD);
     }
-
     public double getStone() {
-        return stone;
+        return resourcesMap.get(Commodity.STONE);
     }
-
     public double getWood() {
-        return wood;
+        return resourcesMap.get(Commodity.WOOD);
     }
-
     public int getPeople() {
         return people;
     }
-
     public int getWorkingPeople() {
         return workingPeople;
     }
+    public void useFood(double food) {
+        resourcesMap.put(Commodity.FOOD, getFood() - food);
+    }
+    public void useGold(double gold) {
+        resourcesMap.put(Commodity.GOLD, getGold() - gold);
+    }
+    public void useStone(double stone) {
+        resourcesMap.put(Commodity.STONE, getStone() - stone);
+    }
+    public void useWood(double wood) {
+        resourcesMap.put(Commodity.WOOD, getWood() - wood);
+    }
+    public void addFood(double food) {
+        resourcesMap.put(Commodity.FOOD, getFood() + food);
+    }
+    public void addGold(double gold) {
+        resourcesMap.put(Commodity.GOLD, getGold() + gold);
+    }
+    public void addStone(double stone) {
+        resourcesMap.put(Commodity.STONE, getStone() + stone);
+    }
+    public void addWood(double wood) {
+        resourcesMap.put(Commodity.WOOD, getWood() + wood);
+    }
 
-    /*
-       najprv zisti ci je dostatok zdrojov a potom vytvori budovu, budova je najprv przdna bez ludi
-    */
+    public String toString(){
+        return "Food: " + getFood() + ", "+
+                "Gold: " + getGold() + ", "+
+                "Stone: " + getStone() + ", "+
+                "Wood: " + getWood();
+    }
+
+    public void printResourcesStatus(){
+        System.out.println(
+                toString()
+        );
+    }
+
     public final void CreateBuilding(int id){
         GameBuilding TempBuilding;
         Building BD = BuildingData.get(id);
@@ -64,11 +85,8 @@ public  class GameBuildingController {
             Buildings.put(Buildings.size(), TempBuilding);
             useResources(BD.getPrice());
         }
-    } 
-    
-    /*
-    ak je dostatok zdrojov tak upgraduje budovu s danym, id
-    */
+    }
+
     public void upgradeBuilding(int id){
         GameBuilding tempBuilding;
         tempBuilding =  Buildings.get(id);
@@ -80,7 +98,7 @@ public  class GameBuildingController {
     
     /*
     vola ju XPgame kazdu sekundu, updatne zdroje, a aj pocet ludi k dispozicii a pocet pracujucich ludi
-    typ budovy zavisi od jeho umiestnania v jsone,, teda podla idcka v Building.java 
+    typ budovy zavisi od jeho umiestnania v jsone, teda podla idcka v Building.java
     MAYBE NOT THREAD SAFE
     */
     public void updateResources(){
@@ -91,19 +109,19 @@ public  class GameBuildingController {
             int type= building.getType();
             switch(type){
                 case 0:       
-                    food += building.collect();
+                    addFood(building.collect());
                     peopleWorkingCount+=building.getWorkers();
                     break;
                 case 1:
-                    gold += building.collect();
+                    addGold(building.collect());
                     peopleWorkingCount += building.getWorkers();
                     break;
                 case 2:
-                    stone += building.collect();
+                    addStone(building.collect());
                     peopleWorkingCount += building.getWorkers();
                     break;
                 case 3:
-                    wood += building.collect();
+                    addWood(building.collect());
                     peopleWorkingCount+=building.getWorkers();
                     break;
                 case 4: 
@@ -114,10 +132,7 @@ public  class GameBuildingController {
         people = peopleCount;
         workingPeople = peopleWorkingCount;
     }
-    
-    /*
-       prida pracovnika k budove
-    */
+
     public void addWorker(int id){
         if((people - workingPeople) > 0){
             Buildings.get(id).addWorker();
@@ -125,54 +140,26 @@ public  class GameBuildingController {
         }
     }
 
-    public String toString(){
-        return "Food: " + food + ", "+
-               "Gold: " + gold + ", "+
-               "Stone: " + stone + ", "+
-               "Wood: " + wood;
-    }
-
-    public void printResourcesStatus(){
-        System.out.println(
-            toString()
-        );
-    }
-    
-    /*
-        odoberie pracovnika od budovy
-    */
     public void takeWorker(int id) throws Exception{
         Buildings.get(id).takeWorker();
         workingPeople--;
     }
 
-    public boolean isEnoughResources(int[] p) {
-        if(p.length!=4){
-            return false;
-        }
-        else if(p[0]>food){
-            return false;
-        }
-        else if(p[1]>gold){
-            return false;
-        }
-        else if(p[2]>stone){
-            return false;
-        }
-        else if(p[3]>wood){
-            return false;
-        }
-        return true;
+    public boolean isEnoughResources(int[] price) {
+        return (price.length == 4 &&
+                price[0] <= getFood() &&
+                price[1] <= getGold() &&
+                price[2] <= getStone() &&
+                price[3] <= getWood());
     }
-    
-   
-    public void useResources(int[] p){
-        if(p.length!=4){
+
+    public void useResources(int[] price){
+        if(price.length != 4){
             return;
         }
-        food -= p[0];
-        gold -= p[1];
-        stone -= p[2];
-        wood -= p[3];
+        useFood(price[0]);
+        useGold(price[1]);
+        useStone(price[2]);
+        useWood(price[3]);
     }    
 }

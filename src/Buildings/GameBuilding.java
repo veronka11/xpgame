@@ -53,7 +53,7 @@ public class GameBuilding{
         people--;
     }
     
-    public void takeWorker() throws Exception{
+    public void takeWorker() throws Exception {
         if(getWorkers() == 0){
             throw new Exception(); // TODO add custom exception
         }
