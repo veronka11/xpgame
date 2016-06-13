@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="GUI1.jnlp">
+  <information>
+    <title>GUI1</title>
+    <vendor>PC</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" java-vm-args="-Dprism.order=j2d "  href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="GUI1.jar" size="1791577" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="GUI1" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="gui1.GUI1"  name="GUI1" />
+  <update check="always"/>
+</jnlp>
