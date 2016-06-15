@@ -112,9 +112,9 @@ public class BuildingTest {
     @Test
     public void productionSetterSetsProductionFalseAsDefault() {
         Building b = new Building(1, "name");
-        b.setProduction(true);
+        b.setProductivity(true);
         assertFalse(b.isProductive());
-        b.setProduction(false);
+        b.setProductivity(false);
         assertFalse(b.isProductive());
     }
 

@@ -42,26 +42,20 @@ public class JSONloaderTest {
                 "{" +
                         "\"buildings\": " +
                         "[{" +
-                        "\"name\":" + " \"Building Name\"," +
-                        "\"price\":" +" [100, 100, 0, 0]," +
-                        "\"productive\" : false," +
-                        "\"production\" " + ": []," +
-                        "\"upgrades\": [" +
-                        "{" +
-                        "\"upgrade_name\" : " + "\"Upgrade Name\"," +
-                        "\"upgrade_type\" :    1," +
-                        "\"upgrade_rate\" :    1.2," +
-                        "\"upgrade_level_increase\" : 0.4" +
-                        "}," +
-                        "{" +
-                        "\"upgrade_name\" :\"Upgrade Name2\"," +
-                        "\"upgrade_type\" :    2," +
-                        "\"upgrade_rate\" :    1.15," +
-                        "\"upgrade_level_increase\" : 0.2" +
-                        "}" +
-                        "]" +
+                            "\"id\":" + " \"0\"," +
+                            "\"name\":" + " \"Building Name\"," +
+                            "\"price\":" +" [100, 100, 0, 0]," +
+                            "\"productive\" : false," +
+                            "\"production\" " + ": []," +
+                            "\"upgrade\":" +
+                            "{" +
+                                "\"upgrade_name\" : " + "\"Upgrade Name\"," +
+                                "\"upgrade_type\" :    1," +
+                                "\"upgrade_rate\" :    1.2," +
+                                "\"upgrade_level_increase\" : 0.4" +
+                            "}" +
                         "}]" +
-                        "}");
+                "}");
         try {
             PrintWriter file = new PrintWriter("testStructure.json");
             file.write(inputStringForTestFile.toString());
@@ -77,7 +71,7 @@ public class JSONloaderTest {
     public void tearDown() {
     }
 
-    @Ignore
+
     @Test
     public void testJSONParserActuallyParsesSomething(){
         try {
@@ -90,7 +84,7 @@ public class JSONloaderTest {
 
     }
 
-    @Ignore
+
     @Test
     public void testJSONParserReturnsInstanceOfBuilding(){
         try {
@@ -103,7 +97,7 @@ public class JSONloaderTest {
         }
     }
 
-    @Ignore
+
     @Test
     public void testJSONParserWithMissingFileThrowsException(){
         try {
@@ -115,7 +109,7 @@ public class JSONloaderTest {
         }
     }
 
-    @Ignore
+
     @Test
     public void testJSONParserParsesCorrectData(){
         try {
@@ -126,8 +120,9 @@ public class JSONloaderTest {
             assertEquals("id", testBuilding.getId(), 0);
             assertEquals("name", testBuilding.getName(), "Building Name");
             assertArrayEquals("price", new int[] {100, 100, 0, 0}, testBuilding.getPrice());
-            assertEquals("production", testBuilding.getProduction(), new int[0]);
+            assertArrayEquals("production", testBuilding.getProduction(), new int[0]);
             assertEquals("productive", testBuilding.isProductive(), false);
+
 
         }
         catch (FileNotFoundException e){

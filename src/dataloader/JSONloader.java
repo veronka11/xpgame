@@ -108,13 +108,13 @@ public class JSONloader {
         for (JsonObject building : buildings.getValuesAs(JsonObject.class)) {
             // Name
             name = building.getString("name");
-            id = building.getInt("id");
+            id = Integer.valueOf(building.getString("id"));
 
             // Instance
             Building tempBuilding = new Building(id, name);
 
             // Price
-            price = new int[building.size()];
+            price = new int[Commodity.values().length];
             JsonArray tempPrice = building.getJsonArray("price");
             for (int i = 0; i < tempPrice.size(); i++) {
                 price[i] = tempPrice.getInt(i);
@@ -123,6 +123,7 @@ public class JSONloader {
 
             // Production
             productivity = building.getBoolean("productive");
+            tempBuilding.setProductivity(productivity);
             if (productivity) {
                 JsonArray tempProduction = building.getJsonArray("production");
                 production = new int[tempProduction.size()];
@@ -131,7 +132,7 @@ public class JSONloader {
                 }
                 tempBuilding.setProduction(production);
             } else {
-                tempBuilding.setProduction(productivity);
+                tempBuilding.setProduction(new int[0]);
             }
 
             // BuildingUpgrades

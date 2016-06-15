@@ -21,13 +21,12 @@ public class Building {
         this.price = priceData; // TODO throw exception if price data is not length 4
     }
     
-    public void setProduction(boolean state) {
-        this.productivity = false; // TODO remove state parameter, or use it
+    public void setProductivity(boolean state) {
+        this.productivity = state;
     }
     
     public void setProduction(int[] productData) {
         this.production = productData; // TODO throw exception if product data is not length 4
-        this.productivity = true;
     }
 
     public int getId() {
