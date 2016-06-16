@@ -141,5 +141,22 @@ public  class GameBuildingController {
         useGold(price[Commodity.GOLD.ordinal()]);
         useStone(price[Commodity.STONE.ordinal()]);
         useWood(price[Commodity.WOOD.ordinal()]);
-    }    
+    }
+
+    private boolean hasEnoughCommodities(int selectedBuilding) {
+        Building requestedBuilid = BuildingData.get(selectedBuilding);
+        return isEnoughResources(requestedBuilid.getPrice());
+
+    }
+
+    public int build(int selectedBuilding) {
+        if (hasEnoughCommodities(selectedBuilding)) {
+            Building data = BuildingData.get(selectedBuilding);
+            Buildings.put(Buildings.size(), new GameBuilding(data));
+            useResources(data.getPrice());
+            return 1;
+        }
+
+        return -1;
+    }
 }

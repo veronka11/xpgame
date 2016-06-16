@@ -1,5 +1,8 @@
 package xpgame.graphics;
 
+import Buildings.GameBuildingController;
+import xpgame.XPgame;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +19,14 @@ public class GameCanvasPanel extends JPanel{
     private BufferedImage grassSprite;
     private BufferedImage[] buildingsSprite;
     private int[][] buildingsMap;
+    private XPgame xpgameRef;
     private final static String BUILDING_PREFIX = "obr";
     private final static String IMAGE_SUFFIX = ".png";
     private final static int EMPTY = -1;
 
-    public GameCanvasPanel (int buildingsLength) {
+    public GameCanvasPanel (XPgame xpg, int buildingsLength) {
         setOpaque(true);
+        xpgameRef = xpg;
         // Fetch sprites
         fetchMapSprites(buildingsLength);
         try {
@@ -48,7 +53,10 @@ public class GameCanvasPanel extends JPanel{
 
                 if (row < buildingsMap.length) {
                     // Valid click
-                    System.out.println(row + " - " + col);
+                    //buildingsMap[row][col]++;
+                    //repaint();
+                    System.out.println(row + " - " + col + " - " + buildingsMap[row][col]);
+                    xpgameRef.evaluateMapTouch(row, col);
                     // TODO valid click, notify handler
                 }
             }
@@ -87,5 +95,10 @@ public class GameCanvasPanel extends JPanel{
             }
         }
 
+    }
+
+    public void assignBuilding(int row, int col, int selectedBuilding) {
+        buildingsMap[row][col] = selectedBuilding;
+        repaint();
     }
 }

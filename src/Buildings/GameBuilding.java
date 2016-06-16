@@ -1,7 +1,6 @@
 package Buildings;
 
 import entity.Building;
-import xpgame.Commodity;
 
 /**
  *
@@ -32,7 +31,21 @@ public class GameBuilding{
         isProductive = data.isProductive();
         production = data.getProduction();
     }
-    
+
+    public GameBuilding(Building data) {
+        this.id = data.getId();
+        level = 0;
+        people = 0;
+        Name = data.getName();
+        price = data.getPrice();
+        if (data.hasUpgrade()) {
+            upgradeLevelIncrease = data.getUpgrade().getLevelIncrease();
+            upgradeRate = data.getUpgrade().getRate();
+        }
+        isProductive = data.isProductive();
+        production = data.getProduction();
+    }
+
     public void setLevel(int level){
         this.level = level;
     }
@@ -56,14 +69,13 @@ public class GameBuilding{
     
     public void takeWorker() throws Exception {
         if(getWorkers() == 0){
-            throw new Exception(); // TODO add custom exception
+            throw new Exception();
         }
         removeWorker();
     }
     
     double collect() {
         if(!isProductive){
-            // TODO add custom exception
             return upgradeRate;
         }
         return people * upgradeRate;

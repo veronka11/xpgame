@@ -2,8 +2,6 @@ package entity;
 
 import xpgame.Commodity;
 
-import java.util.ArrayList;
-
 public class Building {
     private final int id;
     private final String name;
@@ -18,7 +16,7 @@ public class Building {
     }
     
     public void setPrice(int[] priceData) {
-        this.price = priceData; // TODO throw exception if price data is not length 4
+        this.price = priceData;
     }
     
     public void setProductivity(boolean state) {
@@ -26,7 +24,7 @@ public class Building {
     }
     
     public void setProduction(int[] productData) {
-        this.production = productData; // TODO throw exception if product data is not length 4
+        this.production = productData;
     }
 
     public int getId() {
@@ -64,5 +62,9 @@ public class Building {
 
     public void setUpgrade(BuildingUpgrade tempBuildingUpgrade) {
         this.upgrade = tempBuildingUpgrade;
+    }
+
+    public boolean hasUpgrade() {
+        return !(this.upgrade == null);
     }
 }

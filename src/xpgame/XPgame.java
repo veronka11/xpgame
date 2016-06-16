@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  */
 public class XPgame {
     private final static String GAME_NAME = "XPgame";
-    public final static Dimension GAME_RESOLUTION = new Dimension(800, 600);
     // GUI
     private JFrame mainWindow;
     private GameCanvasPanel gameCanvas;
@@ -34,8 +33,11 @@ public class XPgame {
     private HashMap<Integer, Building> BuildingData;
     private final String path = "/Users/newnew/IdeaProjects/latest_extremne_programovanie/xpgame/src/dataloader/baseBuildingsData.json";
     private GameBuildingController GBC;
+    private GameHandler gHandler;
     private GameTimer timer;
     private Thread gameThread;
+
+    public final static Dimension GAME_RESOLUTION = new Dimension(800, 600);
 
     public void XPgame() { }
 
@@ -53,6 +55,9 @@ public class XPgame {
 
             // Draw GUI
             renderGame();
+
+            // Assign handler
+            gHandler = new GameHandler(GBC, gameCanvas);
 
             // Start game
             //gameThread.start();
@@ -138,7 +143,7 @@ public class XPgame {
         pane.add(statsPanel, BorderLayout.PAGE_START);
 
         // GameCanvas passes reference of Buildings length
-        gameCanvas = new GameCanvasPanel(BuildingData.size());
+        gameCanvas = new GameCanvasPanel(this, BuildingData.size());
         pane.add(gameCanvas);
 
         // Control Panel for upgrades and buildings
@@ -173,6 +178,10 @@ public class XPgame {
                 game.renderMenu();
             }
         });
+    }
+
+    public void evaluateMapTouch(int row, int col) {
+        gHandler.buildBuilding(row, col);
     }
 }
 
