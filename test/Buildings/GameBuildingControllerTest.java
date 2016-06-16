@@ -9,6 +9,7 @@ import entity.Building;
 import entity.BuildingUpgrade;
 import org.junit.Before;
 import org.junit.Test;
+import xpgame.NullNameBuildingUpgradeException;
 
 import java.util.HashMap;
 
@@ -114,43 +115,53 @@ public class GameBuildingControllerTest {
 
     @Test
     public void testCreateBuildingUsesResources() {
-        BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
-        Building b = new Building(1, "test_name");
-        b.setUpgrade(bu);
-        b.setPrice(new int[]{1, 1, 1, 1});
-        HashMap<Integer, Building> building_data = new HashMap<>();
-        building_data.put(0, b);
+        try {
+            BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 1.2);
+            Building b = new Building(1, "test_name");
+            b.setUpgrade(bu);
+            b.setPrice(new int[]{1, 1, 1, 1});
+            HashMap<Integer, Building> building_data = new HashMap<>();
+            building_data.put(0, b);
 
-        GameBuildingController filled_gbc = new GameBuildingController(building_data);
+            GameBuildingController filled_gbc = new GameBuildingController(building_data);
 
-        filled_gbc.CreateBuilding(0);
-        assertEquals(99, filled_gbc.getFood(), 0.01);
-        assertEquals(99, filled_gbc.getGold(), 0.01);
-        assertEquals(99, filled_gbc.getStone(), 0.01);
-        assertEquals(99, filled_gbc.getWood(), 0.01);
+            filled_gbc.CreateBuilding(0);
+            assertEquals(99, filled_gbc.getFood(), 0.01);
+            assertEquals(99, filled_gbc.getGold(), 0.01);
+            assertEquals(99, filled_gbc.getStone(), 0.01);
+            assertEquals(99, filled_gbc.getWood(), 0.01);
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
+
     }
 
     @Test
     public void testAddWorkerWorksAndDoesNotGoToNegativeNumbers() {
-        BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
-        Building b = new Building(1, "test_name");
-        b.setUpgrade(bu);
-        b.setPrice(new int[]{1, 1, 1, 1});
-        HashMap<Integer, Building> building_data = new HashMap<>();
-        building_data.put(0, b);
+        try {
+            BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 1.2);
+            Building b = new Building(1, "test_name");
+            b.setUpgrade(bu);
+            b.setPrice(new int[]{1, 1, 1, 1});
+            HashMap<Integer, Building> building_data = new HashMap<>();
+            building_data.put(0, b);
 
-        GameBuildingController filled_gbc = new GameBuildingController(building_data);
+            GameBuildingController filled_gbc = new GameBuildingController(building_data);
 
-        filled_gbc.CreateBuilding(0);
+            filled_gbc.CreateBuilding(0);
 
-        assertEquals(10, filled_gbc.getPeople());
-        assertEquals(0, filled_gbc.getWorkingPeople());
-        filled_gbc.addWorker(0);
-        assertEquals(1, filled_gbc.getWorkingPeople());
-
-        for(int i = 0; i < 11; i++){ // more than we have left
+            assertEquals(10, filled_gbc.getPeople());
+            assertEquals(0, filled_gbc.getWorkingPeople());
             filled_gbc.addWorker(0);
+            assertEquals(1, filled_gbc.getWorkingPeople());
+
+            for(int i = 0; i < 11; i++){ // more than we have left
+                filled_gbc.addWorker(0);
+            }
+            assertEquals(10, filled_gbc.getWorkingPeople());
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
         }
-        assertEquals(10, filled_gbc.getWorkingPeople());
+
     }
 }

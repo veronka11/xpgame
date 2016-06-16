@@ -9,6 +9,8 @@ import entity.Building;
 import entity.BuildingUpgrade;
 import org.junit.Before;
 import org.junit.Test;
+import xpgame.NullNameBuildingUpgradeException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -21,8 +23,11 @@ public class GameBuildingTest {
     @Before
     public void setUp() {
         b = new Building(1, "test_name");
-
-        bu = new BuildingUpgrade("test_upgrade", 1, 1.2, 1.2);
+        try {
+            bu = new BuildingUpgrade("test_upgrade", 1.2, 1.2);
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
 
 
         correct_b = new Building(2, "test_name2");
@@ -78,7 +83,11 @@ public class GameBuildingTest {
 
     @Test
     public void testUpLevelUpsRate() {
-        bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
+        try {
+            bu = new BuildingUpgrade("test_upgrade", 2, 1.2);
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
         b = new Building(1, "test_name");
         b.setUpgrade(bu);
         GameBuilding gb = new GameBuilding(b, 1);
@@ -90,7 +99,11 @@ public class GameBuildingTest {
 
     @Test
     public void testUpLevelUpsRate2() {
-        bu = new BuildingUpgrade("test_upgrade2", 1, 23, 2);
+        try {
+            bu = new BuildingUpgrade("test_upgrade2", 23, 2);
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
         b = new Building(1, "test_name2");
         b.setUpgrade(bu);
         GameBuilding gb = new GameBuilding(b, 2);
@@ -133,7 +146,7 @@ public class GameBuildingTest {
      */
     @Test
     public void getPriceForNextLevelThrowsExceptionIfPriceIsNotSet() throws Exception {
-        bu = new BuildingUpgrade("test_upgrade", 1, 2, 1.2);
+        bu = new BuildingUpgrade("test_upgrade", 2, 1.2);
         b.setUpgrade(bu);
         GameBuilding bg = new GameBuilding(b, 1);
 

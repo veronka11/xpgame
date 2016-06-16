@@ -1,23 +1,20 @@
 package entity;
 
+import xpgame.NullNameBuildingUpgradeException;
+
 public class BuildingUpgrade {
     private final String name;
-    private final int type;
     private final double rate, levelIncrease;
     
-    public BuildingUpgrade(String name, int type, double rate, double levelIncrease) {
+    public BuildingUpgrade(String name, double rate, double levelIncrease) throws NullNameBuildingUpgradeException {
+        if (name == null) throw new NullNameBuildingUpgradeException("Building Upgrade parameter name cannot be null!");
         this.name = name;
-        this.type = type;
         this.rate = rate;
         this.levelIncrease = levelIncrease;
     }
 
     public String getName() {
         return name;
-    }
-
-    public int getType() {
-        return type;
     }
 
     public double getRate() {

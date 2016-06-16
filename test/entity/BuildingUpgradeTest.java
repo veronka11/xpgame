@@ -6,6 +6,8 @@
 package entity;
 
 import org.junit.Test;
+import xpgame.NullNameBuildingUpgradeException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -18,13 +20,17 @@ public class BuildingUpgradeTest {
 
     @Test
     public void testInitializationWithCorrectValuesIsSuccessful() {
-        new BuildingUpgrade("test_name", 1, 1.0, 1.2);
+        try {
+            new BuildingUpgrade("test_name", 1.0, 1.2);
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
     }
 
     @Test
     public void testInitializationThrowsErrorIfNameIsNull() {
         try {
-            new BuildingUpgrade(null, 1, 1.0, 1.2);
+            new BuildingUpgrade(null, 1.0, 1.2);
             fail("Exception not thrown.");
         }
         catch (Exception e) {
@@ -35,7 +41,7 @@ public class BuildingUpgradeTest {
     @Test
     public void testInitializationThrowsErrorIfNameIsEmptyString() {
         try {
-            new BuildingUpgrade("", 1, 1.0, 1.2);
+            new BuildingUpgrade("", 1.0, 1.2);
             fail("Exception not thrown.");
         }
         catch (Exception e) {
@@ -49,10 +55,14 @@ public class BuildingUpgradeTest {
 
     @Test
     public void testGettersWork() {
-        BuildingUpgrade bu = new BuildingUpgrade("test_name", 1, 1.0, 1.2);
-        assertEquals("test_name", bu.getName());
-        assertEquals(1, bu.getType());
-        assertEquals(1.0, bu.getRate(), 0.01);
-        assertEquals(1.2, bu.getLevelIncrease(), 0.01);
+        try {
+            BuildingUpgrade bu = new BuildingUpgrade("test_name", 1.0, 1.2);
+            assertEquals("test_name", bu.getName());
+            assertEquals(1.0, bu.getRate(), 0.01);
+            assertEquals(1.2, bu.getLevelIncrease(), 0.01);
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
+
     }
 }

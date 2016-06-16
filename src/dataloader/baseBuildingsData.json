@@ -1,107 +1,98 @@
 {
   "buildings": [
     {
+      "id" : 0,
       "name":         "Rest House",
       "price":        [0, 0, 0, 0],
       "productive" :  false,
       "production" : [],
-      "upgrades": [
-        {
+      "upgrade": {
           "upgrade_name": "Increase population",
           "upgrade_rate": 8,
           "upgrade_level_increase": 2
         }
-      ]
-
     },
     {
+      "id" : 1,
       "name":         "Main Building",
       "price":        [0, 0, 0, 0],
       "productive" :  false,
       "production" : [],
-      "upgrades": []
-
+      "upgrade": {
+      }
     },
     {
+      "id" : 2,
       "name":         "Meat fabric",
       "price":        [100, 0, 0, 0],
       "productive" :  true,
       "production" : [5, 5, 5, 5],
-      "upgrades": [
-        {
-          "upgrade_name" :    "More Food",
-          "upgrade_rate" :    2,
-          "upgrade_level_increase" : 2
-        }
-      ]
-
+      "upgrade": {
+          "upgrade_name": "More Food",
+          "upgrade_rate": 2,
+          "upgrade_level_increase": 2
+      }
     },
     {
+      "id" : 3,
       "name":         "Milk fabric",
       "price":        [100, 0, 0, 0],
       "productive" :  true,
       "production" : [5, 5, 5, 5],
-      "upgrades": [
-        {
+      "upgrade": {
           "upgrade_name" :    "More Food",
           "upgrade_rate" :    2,
           "upgrade_level_increase" : 2
         }
-      ]
-
     },
     {
+      "id" : 4,
       "name":         "Baking fabric",
       "price":        [100, 0, 0, 0],
       "productive" :  true,
       "production" : [5, 5, 5, 5],
-      "upgrades": [
-        {
+      "upgrade": {
           "upgrade_name" :    "More Food",
           "upgrade_rate" :    2,
           "upgrade_level_increase" : 2
         }
-      ]
 
     },
     {
+      "id" : 5,
       "name":         "Gold fabric",
       "price":        [0, 100, 0, 0],
       "productive" :  true,
       "production" : [5, 5, 5, 5],
-      "upgrades": [
-        {
+      "upgrade": {
           "upgrade_name" :    "More gold",
           "upgrade_rate" :    5,
           "upgrade_level_increase" : 3
         }
-      ]
     },
     {
+      "id" : 6,
       "name":         "Stone fabric",
       "price":        [0, 0, 100, 0],
       "productive" :  true,
       "production" : [5, 5, 5, 5],
-      "upgrades": [
-        {
+      "upgrade": {
           "upgrade_name" :    "Stone wood",
           "upgrade_rate" :    5,
           "upgrade_level_increase" : 3
         }
-      ]
     },
     {
+      "id" : 7,
       "name":         "Wood fabric",
       "price":        [0, 0, 0, 100],
       "productive" :  true,
       "production" : [5, 5, 5, 5],
-      "upgrades": [
-        {
+      "upgrade": {
           "upgrade_name" :    "More wood",
           "upgrade_rate" :    5,
           "upgrade_level_increase" : 3
         }
-      ]
     }
   ],
 

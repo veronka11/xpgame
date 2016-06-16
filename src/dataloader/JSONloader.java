@@ -3,6 +3,8 @@ package dataloader;
 import entity.Building;
 import entity.BuildingUpgrade;
 import xpgame.Commodity;
+import xpgame.GameInicializaitonFailedException;
+import xpgame.NullNameBuildingUpgradeException;
 
 import java.io.*;
 import java.util.*;
@@ -59,7 +61,6 @@ public class JSONloader {
 
                 gen.writeStartObject("upgrade")
                         .write("upgrade_name", tempBuilding.getUpgrade().getName())
-                        .write("upgrade_type", tempBuilding.getUpgrade().getType())
                         .write("upgrade_rate", tempBuilding.getUpgrade().getRate())
                         .write("upgrade_level_increase", tempBuilding.getUpgrade().getLevelIncrease())
                     .writeEnd()
@@ -106,10 +107,17 @@ public class JSONloader {
         // Buildings
         JsonArray buildings = obj.getJsonArray("buildings");
         for (JsonObject building : buildings.getValuesAs(JsonObject.class)) {
+
+
             // Name
             name = building.getString("name");
-            id = Integer.valueOf(building.getString("id"));
+            try {
+                id = building.getInt("id");
+            } catch (ClassCastException cce) {
+                id = Integer.valueOf(building.getString("id"));
+            }
 
+            System.out.println("Building " + id);
             // Instance
             Building tempBuilding = new Building(id, name);
 
@@ -135,14 +143,24 @@ public class JSONloader {
                 tempBuilding.setProduction(new int[0]);
             }
 
-            // BuildingUpgrades
-            JsonObject tempUpgrade = (JsonObject) building.get("upgrade");
-            tempBuildingUpgrade = new BuildingUpgrade(tempUpgrade.getString("upgrade_name"),
-                                                        tempUpgrade.getInt("upgrade_type"),
-                                                        Double.valueOf(tempUpgrade.get("upgrade_rate").toString()),
-                                                        Double.valueOf(tempUpgrade.get("upgrade_level_increase").toString())
-                                                        );
-            tempBuilding.setUpgrade(tempBuildingUpgrade);
+
+
+            try {
+                // BuildingUpgrades
+                JsonObject tempUpgrade = building.getJsonObject("upgrade");
+
+                if (!tempUpgrade.isEmpty()) {
+                    tempBuildingUpgrade = new BuildingUpgrade(tempUpgrade.getString("upgrade_name"),
+                            Double.valueOf(tempUpgrade.get("upgrade_rate").toString()),
+                            Double.valueOf(tempUpgrade.get("upgrade_level_increase").toString())
+                    );
+                    tempBuilding.setUpgrade(tempBuildingUpgrade);
+                }
+
+            } catch (NullNameBuildingUpgradeException nnbue) {
+                throw new GameInicializaitonFailedException("Building Upgrade parameter name cannot be null!");
+            }
+
 
             // ----------------------------
             // Add building
@@ -155,7 +173,7 @@ public class JSONloader {
     // Main
     public static void main(String[] args) {
         try {
-            HashMap<Integer, Building> hm = JSONloader.JSONloadBuildings("/Users/newnew/IdeaProjects/xpgame/src/dataloader/structure.json");
+            HashMap<Integer, Building> hm = JSONloader.JSONloadBuildings("/Users/newnew/IdeaProjects/latest_extremne_programovanie/xpgame/src/dataloader/baseBuildingsData.json");
             //HashMap<Integer, Building> hm = JSONloader.JSONloadBuildings("/Users/newnew/IdeaProjects/xpgame/savedatatest.json");
             //JSONloader.JSONsaveBuildings(hm);
         } catch (FileNotFoundException fnfe) {

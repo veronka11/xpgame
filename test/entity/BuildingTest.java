@@ -7,6 +7,8 @@ package entity;
 
 import java.util.ArrayList;
 import org.junit.Test;
+import xpgame.NullNameBuildingUpgradeException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -57,8 +59,13 @@ public class BuildingTest {
     public void toStringReturnsCorrectOutput(){
         Building b = new Building(1, "test_name");
         b.setPrice(new int[]{1, 2, 3, 4});
-        b.setUpgrade(new BuildingUpgrade("MYNAME", 1, 2, 3));
+        try {
+            b.setUpgrade(new BuildingUpgrade("MYNAME", 1, 2));
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
         assertEquals("Building name:test_name| Price:1-2-3-4| Upgrade: MYNAME", b.toString());
+
     }
 
     @Test
@@ -66,7 +73,11 @@ public class BuildingTest {
         Building b = new Building(1, "test_name");
         b.setPrice(new int[]{11, 22, 33, 44});
         ArrayList<BuildingUpgrade> al = new ArrayList<BuildingUpgrade>();
-        b.setUpgrade(new BuildingUpgrade("name", 1, 2, 3));
+        try {
+            b.setUpgrade(new BuildingUpgrade("name", 1, 2));
+        } catch (NullNameBuildingUpgradeException nnbue) {
+            fail("Unexpected exception thrown.");
+        }
         assertEquals("Building name:test_name| Price:11-22-33-44| Upgrade: name", b.toString());
     }
 
@@ -113,7 +124,7 @@ public class BuildingTest {
     public void productionSetterSetsProductionFalseAsDefault() {
         Building b = new Building(1, "name");
         b.setProductivity(true);
-        assertFalse(b.isProductive());
+        assertTrue(b.isProductive());
         b.setProductivity(false);
         assertFalse(b.isProductive());
     }
@@ -125,17 +136,4 @@ public class BuildingTest {
         assertTrue(b.isProductive());
     }
 
-    @Test
-    public void productivityDataCantBeOfLengthOtherThan4() {
-        Building b = new Building(1, "name");
-        try {
-            b.setProduction(new int[]{1, 1, 1});
-            b.setProduction(new int[]{1});
-            b.setProduction(new int[]{1, 3});
-            fail("Exception not thrown.");
-        }
-        catch (Exception e){
-            assertTrue(true);
-        }
-    }
 }
