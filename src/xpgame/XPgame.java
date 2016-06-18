@@ -8,15 +8,20 @@ package xpgame;
 import Buildings.GameBuildingController;
 import dataloader.JSONloader;
 import entity.Building;
+import xpgame.graphics.ControlPanel;
 import xpgame.graphics.GameCanvasPanel;
+import xpgame.graphics.JBuildingButton;
 import xpgame.graphics.MenuPanel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,9 +34,11 @@ public class XPgame {
     // GUI
     private JFrame mainWindow;
     private GameCanvasPanel gameCanvas;
+    private ControlPanel controlPanel;
+    private JBuildingButton selectedBuildingButton;
     // DATA-HANDLERS
     private HashMap<Integer, Building> BuildingData;
-    private final String path = "/Users/newnew/IdeaProjects/latest_extremne_programovanie/xpgame/src/dataloader/baseBuildingsData.json";
+    private final String path = this.getClass().getClassLoader().getResource("dataloader/baseBuildingsData.json").getPath();
     private GameBuildingController GBC;
     private GameHandler gHandler;
     private GameTimer timer;
@@ -147,12 +154,69 @@ public class XPgame {
         pane.add(gameCanvas);
 
         // Control Panel for upgrades and buildings
-        JPanel controlPanel = new JPanel();
-        controlPanel.setBackground(Color.blue);
+        controlPanel = new ControlPanel(this);
+        controlPanel.setBackground(Color.darkGray);
         controlPanel.setPreferredSize(new Dimension(800, 120));
+
+        // add house panel
+        JPanel housePanel = new JPanel();
+        JScrollPane scrollbar = new JScrollPane(housePanel,
+                JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+
+        // TODO add all houses
+        Iterator it = BuildingData.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry) it.next();
+            Building buildingData = (Building) pair.getValue();
+
+            // Make component
+            JBuildingButton buildingButton = GameBuildingController.createButtonFromData(buildingData);
+            housePanel.add(buildingButton);
+
+            // Listener
+            buildingButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    // Unselect previous
+                    if (selectedBuildingButton != null) {
+                        selectedBuildingButton.deselect();
+                    }
+
+                    // Select new one
+                    selectedBuildingButton = (JBuildingButton) e.getSource();
+                    selectedBuildingButton.select();
+                    gHandler.chooseBuilding(selectedBuildingButton.getbuildingId());
+
+                }
+            });
+        }
+
+
+
+
+        //housePanel.setPreferredSize(new Dimension(500, 120));
+        scrollbar.setPreferredSize(new Dimension(500, 120));
+        housePanel.setBackground(Color.green);
+
+        controlPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        //controlPanel.add(housePanel, BorderLayout.LINE_START);
+        controlPanel.add(scrollbar, BorderLayout.PAGE_START);
 
         pane.add(controlPanel, BorderLayout.PAGE_END);
 
+        controlPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (selectedBuildingButton != null) {
+                    selectedBuildingButton.deselect();
+                    gHandler.chooseBuilding(GameCanvasPanel.EMPTY);
+                }
+            }
+        });
 
         mainWindow.revalidate();
         mainWindow.repaint();

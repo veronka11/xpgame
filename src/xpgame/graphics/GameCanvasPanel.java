@@ -20,9 +20,9 @@ public class GameCanvasPanel extends JPanel{
     private BufferedImage[] buildingsSprite;
     private int[][] buildingsMap;
     private XPgame xpgameRef;
-    private final static String BUILDING_PREFIX = "obr";
-    private final static String IMAGE_SUFFIX = ".png";
-    private final static int EMPTY = -1;
+    public final static int EMPTY = -1;
+    public final static String BUILDING_PREFIX = "obr";
+    public final static String IMAGE_SUFFIX = ".png";
 
     public GameCanvasPanel (XPgame xpg, int buildingsLength) {
         setOpaque(true);

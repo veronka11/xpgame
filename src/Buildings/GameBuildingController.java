@@ -2,6 +2,10 @@ package Buildings;
 
 import entity.Building;
 import xpgame.Commodity;
+import xpgame.graphics.GameCanvasPanel;
+import xpgame.graphics.JBuildingButton;
+
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -158,5 +162,18 @@ public  class GameBuildingController {
         }
 
         return -1;
+    }
+
+    public static JBuildingButton createButtonFromData(Building buildingData) {
+
+        // TODO update resources that we do not need to increment buildingData->ID, that's TEMPORARY fix!!
+
+        String pathPrepared = "xpgame/resources/sprites/" + GameCanvasPanel.BUILDING_PREFIX + (buildingData.getId() + 1) +  GameCanvasPanel.IMAGE_SUFFIX;
+        String path = GameBuildingController.class.getClassLoader().getResource(pathPrepared).getPath();
+
+        ImageIcon buildingIcon = new ImageIcon(path);
+        JBuildingButton result = new JBuildingButton(buildingData.getName(), buildingIcon, buildingData.getId());
+
+        return result;
     }
 }
