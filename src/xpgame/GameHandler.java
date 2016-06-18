@@ -11,11 +11,13 @@ import java.util.logging.Handler;
 public class GameHandler {
     private GameBuildingController mGameBuildingController;
     private GameCanvasPanel mGameCanvasPanel;
+    private XPgame mXPgame;
     private int selectedBuilding = -1;
 
-    public GameHandler(GameBuildingController gameBuildingController, GameCanvasPanel gameCanvasPanel) {
+    public GameHandler(XPgame xpg, GameBuildingController gameBuildingController, GameCanvasPanel gameCanvasPanel) {
         mGameBuildingController = gameBuildingController;
         mGameCanvasPanel = gameCanvasPanel;
+        mXPgame = xpg;
     }
 
     public void chooseBuilding(int id) {
@@ -25,12 +27,14 @@ public class GameHandler {
     public void buildBuilding(int row, int col) {
 
         // Not selected
-        if (selectedBuilding == -1) selectedBuilding = 1;
+        if (selectedBuilding == -1) return;
 
         // Try build
         if (mGameBuildingController.build(selectedBuilding) == 1) { // Build successful
             mGameCanvasPanel.assignBuilding(row, col, selectedBuilding);
+            mXPgame.updateStats();
             selectedBuilding = -1;
+
         } else {
             System.out.println("Not enough commodities!");
         }

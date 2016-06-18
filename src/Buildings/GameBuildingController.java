@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public  class GameBuildingController {
+    private static final String STATS_REPRESENTATION_SEPARATOR = " | ";
+    private static final String STATS_REPRESENTATION_RELATION = " : ";
     private final HashMap<Integer, Building> BuildingData;
     private HashMap<Integer, GameBuilding> Buildings;
     private HashMap<Commodity, Double> resourcesMap;
@@ -175,5 +177,17 @@ public  class GameBuildingController {
         JBuildingButton result = new JBuildingButton(buildingData.getName(), buildingIcon, buildingData.getId());
 
         return result;
+    }
+
+    public String getStats() {
+        StringBuilder stats = new StringBuilder();
+        stats.append(Commodity.FOOD.name() + STATS_REPRESENTATION_RELATION + String.valueOf((int)getFood()));
+        stats.append(STATS_REPRESENTATION_SEPARATOR);
+        stats.append(Commodity.WOOD.name() + STATS_REPRESENTATION_RELATION+ String.valueOf((int)getWood()));
+        stats.append(STATS_REPRESENTATION_SEPARATOR);
+        stats.append(Commodity.STONE.name() + STATS_REPRESENTATION_RELATION +  String.valueOf((int)getStone()));
+        stats.append(STATS_REPRESENTATION_SEPARATOR);
+        stats.append(Commodity.GOLD.name() + STATS_REPRESENTATION_RELATION + String.valueOf((int)getGold()));
+        return stats.toString();
     }
 }

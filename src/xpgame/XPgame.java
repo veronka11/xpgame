@@ -36,6 +36,7 @@ public class XPgame {
     private GameCanvasPanel gameCanvas;
     private ControlPanel controlPanel;
     private JBuildingButton selectedBuildingButton;
+    private JLabel statistics;
     // DATA-HANDLERS
     private HashMap<Integer, Building> BuildingData;
     private final String path = this.getClass().getClassLoader().getResource("dataloader/baseBuildingsData.json").getPath();
@@ -64,7 +65,7 @@ public class XPgame {
             renderGame();
 
             // Assign handler
-            gHandler = new GameHandler(GBC, gameCanvas);
+            gHandler = new GameHandler(this, GBC, gameCanvas);
 
             // Start game
             //gameThread.start();
@@ -144,8 +145,17 @@ public class XPgame {
 
         // Stats panel for commodity statistics
         JPanel statsPanel = new JPanel();
+        statsPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
         statsPanel.setBackground(Color.red);
         statsPanel.setPreferredSize(new Dimension(800, 30));
+
+        // Stats
+        String statsRepresentation = GBC.getStats();
+
+        statistics = new JLabel(statsRepresentation);
+        statistics.setForeground(Color.WHITE);
+        statistics.setFont(new Font("Courier New", Font.BOLD, 14));
+        statsPanel.add(statistics);
 
         pane.add(statsPanel, BorderLayout.PAGE_START);
 
@@ -164,8 +174,6 @@ public class XPgame {
                 JScrollPane.VERTICAL_SCROLLBAR_NEVER,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-
-        // TODO add all houses
         Iterator it = BuildingData.entrySet().iterator();
         while (it.hasNext()) {
             HashMap.Entry pair = (HashMap.Entry) it.next();
@@ -193,9 +201,6 @@ public class XPgame {
                 }
             });
         }
-
-
-
 
         //housePanel.setPreferredSize(new Dimension(500, 120));
         scrollbar.setPreferredSize(new Dimension(500, 120));
@@ -246,20 +251,12 @@ public class XPgame {
 
     public void evaluateMapTouch(int row, int col) {
         gHandler.buildBuilding(row, col);
+        selectedBuildingButton.deselect();
+    }
+
+    public void updateStats() {
+        statistics.setText(GBC.getStats());
+        mainWindow.revalidate();
+        mainWindow.repaint();
     }
 }
-
-
-
-        /*
-        mainWindow.getContentPane().setLayout(new GridLayout(3, 3));
-        mainWindow.add (new JButton ("NW"));
-        mainWindow.add (new JButton ("N"));
-        mainWindow.add (new JButton ("NE"));
-        mainWindow.add (new JButton ("W"));
-        mainWindow.add (new JButton (" "));
-        mainWindow.add (new JButton ("E"));
-        mainWindow.add (new JButton ("SW"));
-        mainWindow.add (new JButton ("S"));
-        mainWindow.add (new JButton ("SE"));
-        */
