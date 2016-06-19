@@ -143,7 +143,7 @@ public class XPgame {
 
 
         // Stats panel for commodity statistics
-        JPanel statsPanel = new JPanel();
+        JPanel statsPanel = new JImagePanel("xpgame/resources/base_component_background.jpg");
         statsPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
         statsPanel.setBackground(Color.darkGray);
         statsPanel.setPreferredSize(new Dimension(800, 30));
@@ -168,7 +168,7 @@ public class XPgame {
         controlPanel.setPreferredSize(new Dimension(800, 120));
 
         // add house panel
-        JPanel housePanel = new JPanel();
+        JPanel housePanel = new JImagePanel("xpgame/resources/base_component_background.jpg");
         JScrollPane scrollbar = new JScrollPane(housePanel,
                 JScrollPane.VERTICAL_SCROLLBAR_NEVER,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -188,12 +188,18 @@ public class XPgame {
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
                     // Unselect previous
+                    if (SwingUtilities.isRightMouseButton(e)) {
+                        clearSelection();
+                        return;
+                    }
+
                     if (selectedBuildingButton != null) {
                         selectedBuildingButton.deselect();
                     }
 
                     // Select new one
-                    selectedBuildingButton = (JBuildingButton) e.getSource();
+                    JBuildingButton currentSelected = (JBuildingButton) e.getSource();
+                    selectedBuildingButton = currentSelected;
                     selectedBuildingButton.select();
                     gHandler.chooseBuilding(selectedBuildingButton.getbuildingId());
 
@@ -201,9 +207,8 @@ public class XPgame {
             });
         }
 
-        //housePanel.setPreferredSize(new Dimension(500, 120));
         scrollbar.setPreferredSize(new Dimension(500, 120));
-        housePanel.setBackground(Color.green);
+        scrollbar.setBorder(BorderFactory.createEmptyBorder());
         controlPanel.setLayout(new BorderLayout());
         controlPanel.add(scrollbar, BorderLayout.LINE_START);
 
@@ -218,14 +223,12 @@ public class XPgame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (selectedBuildingButton != null) {
+                if ((selectedBuildingButton != null)) {
                     selectedBuildingButton.deselect();
                     gHandler.chooseBuilding(GameCanvasPanel.EMPTY);
                 }
             }
         });
-
-
 
         mainWindow.revalidate();
         mainWindow.repaint();
@@ -276,5 +279,12 @@ public class XPgame {
             functionPanel.renderPanel(data);
         }
 
+    }
+
+    public void clearSelection() {
+        if (selectedBuildingButton != null) {
+            selectedBuildingButton.deselect();
+            gHandler.deselect();
+        }
     }
 }

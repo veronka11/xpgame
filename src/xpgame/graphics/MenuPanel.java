@@ -25,6 +25,7 @@ public class MenuPanel extends JPanel {
         super.paintComponent(g);
         BufferedImage img = null;
         try {
+            // TODO remove absolute path
             img = ImageIO.read(new File("/Users/newnew/IdeaProjects/latest_extremne_programovanie/xpgame/src/xpgame/resources/main_background.jpg"));
         } catch (IOException e) {
             e.printStackTrace();

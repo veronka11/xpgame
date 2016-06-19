@@ -55,4 +55,8 @@ public class GameHandler {
     public void notifyOnUpdate() {
         mXPgame.updateStats();
     }
+
+    public void deselect() {
+        selectedBuilding = -1;
+    }
 }

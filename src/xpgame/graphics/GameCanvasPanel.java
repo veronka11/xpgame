@@ -48,12 +48,16 @@ public class GameCanvasPanel extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                int col = e.getX() / 80;
-                int row = e.getY() / 80;
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    int col = e.getX() / 80;
+                    int row = e.getY() / 80;
 
-                if (row < buildingsMap.length) {
-                    // Valid click
-                    xpgameRef.evaluateMapTouch(row, col);
+                    if (row < buildingsMap.length) {
+                        // Valid click
+                        xpgameRef.evaluateMapTouch(row, col);
+                    }
+                } else {
+                    xpgameRef.clearSelection();
                 }
             }
         });
