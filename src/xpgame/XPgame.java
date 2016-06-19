@@ -5,13 +5,11 @@
  */
 package xpgame;
 
+import Buildings.GameBuilding;
 import Buildings.GameBuildingController;
 import dataloader.JSONloader;
 import entity.Building;
-import xpgame.graphics.ControlPanel;
-import xpgame.graphics.GameCanvasPanel;
-import xpgame.graphics.JBuildingButton;
-import xpgame.graphics.MenuPanel;
+import xpgame.graphics.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -35,6 +33,7 @@ public class XPgame {
     private JFrame mainWindow;
     private GameCanvasPanel gameCanvas;
     private ControlPanel controlPanel;
+    private FunctionPanel functionPanel;
     private JBuildingButton selectedBuildingButton;
     private JLabel statistics;
     // DATA-HANDLERS
@@ -146,7 +145,7 @@ public class XPgame {
         // Stats panel for commodity statistics
         JPanel statsPanel = new JPanel();
         statsPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
-        statsPanel.setBackground(Color.red);
+        statsPanel.setBackground(Color.darkGray);
         statsPanel.setPreferredSize(new Dimension(800, 30));
 
         // Stats
@@ -205,10 +204,13 @@ public class XPgame {
         //housePanel.setPreferredSize(new Dimension(500, 120));
         scrollbar.setPreferredSize(new Dimension(500, 120));
         housePanel.setBackground(Color.green);
+        controlPanel.setLayout(new BorderLayout());
+        controlPanel.add(scrollbar, BorderLayout.LINE_START);
 
-        controlPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        //controlPanel.add(housePanel, BorderLayout.LINE_START);
-        controlPanel.add(scrollbar, BorderLayout.PAGE_START);
+        // FUNCTION PANEL
+        functionPanel = new FunctionPanel(gHandler);
+
+        controlPanel.add(functionPanel, BorderLayout.LINE_END);
 
         pane.add(controlPanel, BorderLayout.PAGE_END);
 
@@ -222,6 +224,8 @@ public class XPgame {
                 }
             }
         });
+
+
 
         mainWindow.revalidate();
         mainWindow.repaint();
@@ -251,12 +255,26 @@ public class XPgame {
 
     public void evaluateMapTouch(int row, int col) {
         gHandler.buildBuilding(row, col);
-        selectedBuildingButton.deselect();
+        if (selectedBuildingButton != null) {
+            selectedBuildingButton.deselect();
+        }
     }
 
     public void updateStats() {
         statistics.setText(GBC.getStats());
         mainWindow.revalidate();
         mainWindow.repaint();
+    }
+
+    public void displayInfoOf(int row, int col) {
+        GameBuilding data = GBC.foundBuildingOnMap(row, col);
+        if (data == null) {
+            functionPanel.hidePanel();
+            System.out.println("Empty place");
+        } else {
+            System.out.println(data.Name);
+            functionPanel.renderPanel(data);
+        }
+
     }
 }

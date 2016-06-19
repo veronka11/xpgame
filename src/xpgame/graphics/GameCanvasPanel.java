@@ -53,19 +53,14 @@ public class GameCanvasPanel extends JPanel{
 
                 if (row < buildingsMap.length) {
                     // Valid click
-                    //System.out.println(row + " - " + col + " - " + buildingsMap[row][col]);
-                    if (canBuildAt(row, col)) {
-                        xpgameRef.evaluateMapTouch(row, col);
-                    } else {
-                        // TODO notify GUI ERROR with message: "You can NOT build here!"
-                    }
+                    xpgameRef.evaluateMapTouch(row, col);
                 }
             }
         });
 
     }
 
-    private boolean canBuildAt(int row, int col) {
+    public boolean canBuildAt(int row, int col) {
         return (buildingsMap[row][col] == -1);
     }
 

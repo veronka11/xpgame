@@ -25,7 +25,7 @@ public class JBuildingButton extends JButton {
     }
 
     public boolean isSelected() {
-        return isSelected();
+        return selected;
     }
 
     public void select() {

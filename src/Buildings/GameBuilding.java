@@ -1,6 +1,7 @@
 package Buildings;
 
 import entity.Building;
+import entity.MapPosition;
 
 /**
  *
@@ -15,11 +16,27 @@ public class GameBuilding{
     public int id;
     public int people;
     public int[] price, production;
+    public MapPosition mapPosition;
     
     /*
     cela trieda upravena tak aby nebolo nutne pamatat si rodicovsky BuildingController
     budovy tak uchovavaju len data a celu logiku vykonava BuildingController
     */
+    GameBuilding(Building data, MapPosition mp) {
+        this.id = data.getId();
+        level = 0;
+        people = 0;
+        mapPosition = mp;
+        Name = data.getName();
+        price = data.getPrice();
+        if (data.hasUpgrade()) {
+            upgradeLevelIncrease = data.getUpgrade().getLevelIncrease();
+            upgradeRate = data.getUpgrade().getRate();
+        }
+        isProductive = data.isProductive();
+        production = data.getProduction();
+    }
+
     GameBuilding(Building data, int id) {
         this.id = id;
         level = 0;
@@ -99,5 +116,9 @@ public class GameBuilding{
 
     public boolean isProductive() {
         return isProductive;
+    }
+
+    public boolean isAt(int row, int col) {
+        return ((this.mapPosition.getRow() == row) && (this.mapPosition.getCol() == col));
     }
 }

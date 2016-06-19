@@ -26,17 +26,33 @@ public class GameHandler {
 
     public void buildBuilding(int row, int col) {
 
+        System.out.println("SelectedBuilding[buildBuilding()] -> " + selectedBuilding);
+
         // Not selected
-        if (selectedBuilding == -1) return;
+        if (selectedBuilding == -1) {
+            displayDetailOfBuilding(row, col);
+            return;
+        }
 
         // Try build
-        if (mGameBuildingController.build(selectedBuilding) == 1) { // Build successful
-            mGameCanvasPanel.assignBuilding(row, col, selectedBuilding);
-            mXPgame.updateStats();
-            selectedBuilding = -1;
-
+        if (mGameCanvasPanel.canBuildAt(row, col)) {
+            if (mGameBuildingController.build(selectedBuilding, row, col) == 1) { // Build successful
+                mGameCanvasPanel.assignBuilding(row, col, selectedBuilding);
+                notifyOnUpdate();
+            } else {
+                System.out.println("Not enough commodities!");
+            }
         } else {
-            System.out.println("Not enough commodities!");
+            System.out.println("You can NOT build here!");
         }
+        selectedBuilding = -1;
+    }
+
+    private void displayDetailOfBuilding(int row, int col) {
+        mXPgame.displayInfoOf(row, col);
+    }
+
+    public void notifyOnUpdate() {
+        mXPgame.updateStats();
     }
 }

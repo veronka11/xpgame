@@ -1,12 +1,14 @@
 package Buildings;
 
 import entity.Building;
+import entity.MapPosition;
 import xpgame.Commodity;
 import xpgame.graphics.GameCanvasPanel;
 import xpgame.graphics.JBuildingButton;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public  class GameBuildingController {
@@ -75,12 +77,6 @@ public  class GameBuildingController {
                "Gold: " + getGold() + ", " +
                "Stone: " + getStone() + ", " +
                "Wood: " + getWood();
-    }
-
-    public void printResourcesStatus(){
-        System.out.println(
-                toString()
-        );
     }
 
     public final void CreateBuilding(int id){
@@ -155,10 +151,10 @@ public  class GameBuildingController {
 
     }
 
-    public int build(int selectedBuilding) {
+    public int build(int selectedBuilding, int row, int col) {
         if (hasEnoughCommodities(selectedBuilding)) {
             Building data = BuildingData.get(selectedBuilding);
-            Buildings.put(Buildings.size(), new GameBuilding(data));
+            Buildings.put(Buildings.size(), new GameBuilding(data, new MapPosition(row, col)));
             useResources(data.getPrice());
             return 1;
         }
@@ -188,6 +184,22 @@ public  class GameBuildingController {
         stats.append(Commodity.STONE.name() + STATS_REPRESENTATION_RELATION +  String.valueOf((int)getStone()));
         stats.append(STATS_REPRESENTATION_SEPARATOR);
         stats.append(Commodity.GOLD.name() + STATS_REPRESENTATION_RELATION + String.valueOf((int)getGold()));
+        stats.append(STATS_REPRESENTATION_SEPARATOR);
+        stats.append("PEOPLE:" + STATS_REPRESENTATION_RELATION + String.valueOf(getPeople()));
         return stats.toString();
+    }
+
+    public GameBuilding foundBuildingOnMap(int row, int col) {
+
+        Iterator it = Buildings.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry) it.next();
+            GameBuilding result = (GameBuilding)pair.getValue();
+            if (result.isAt(row, col)) {
+                return result;
+            }
+        }
+
+        return null;
     }
 }
