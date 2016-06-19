@@ -88,7 +88,7 @@ public class GameCanvasPanel extends JPanel{
         g.drawImage(grassSprite, 0, 0, Color.green, this);
         g.drawImage(grassSprite, 512, 0, Color.green, this);
 
-        g.setColor(Color.red);
+        g.setColor(new Color(255,255,255,20));
         for (int row = 0; row < buildingsMap.length; row++) {
             for (int col = 0; col < buildingsMap[row].length; col++) {
                 g.drawRect(col * 80, row * 80, 80, 80);
