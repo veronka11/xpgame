@@ -16,6 +16,7 @@ import java.io.IOException;
  *
  * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
+
 public class GameCanvasPanel extends JPanel{
     private BufferedImage grassSprite;
     private BufferedImage[] buildingsSprite;
@@ -38,7 +39,6 @@ public class GameCanvasPanel extends JPanel{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.out.println(this.getClass().getClassLoader().getResource("xpgame/resources/logo.png"));
 
         // Clean map
         buildingsMap = new int[5][10];

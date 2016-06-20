@@ -183,7 +183,7 @@ public  class GameBuildingController {
         String path = GameBuildingController.class.getClassLoader().getResource(pathPrepared).getPath();
 
         ImageIcon buildingIcon = new ImageIcon(path);
-        JBuildingButton result = new JBuildingButton(buildingData.getName(), buildingIcon, buildingData.getId());
+        JBuildingButton result = new JBuildingButton(buildingData.getName(), buildingIcon, buildingData);
 
         return result;
     }
