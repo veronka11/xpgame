@@ -116,15 +116,28 @@ public  class GameBuildingController {
     }
 
     public void addWorker(int id){
+        if(people > 0) {
+            Buildings.get(id).addWorker();
+            people--;
+        }
+        /*
         if((people - workingPeople) > 0){
             Buildings.get(id).addWorker();
             workingPeople++;
+            people++;
         }
+        */
     }
 
-    public void takeWorker(int id) throws Exception{
+    public void takeWorker(int id){
+        if (Buildings.get(id).takeWorker()) {
+            people++;
+        }
+        /*
         Buildings.get(id).takeWorker();
-        workingPeople--;
+        //workingPeople--;
+        people--;
+        */
     }
 
     public boolean isEnoughResources(int[] price) {
@@ -218,7 +231,30 @@ public  class GameBuildingController {
     public void destroy(GameBuilding latestData) {
         int key = foundBuildingOnMapInt(latestData.getMapPosition().getRow(), latestData.getMapPosition().getCol());
         if (key != -1) {
+            int removedPeople = Buildings.get(key).people;
             Buildings.remove(key);
+            people += removedPeople;
         }
+    }
+
+    public void addWorker(GameBuilding latestData) {
+        int key = foundBuildingOnMapInt(latestData.getMapPosition().getRow(), latestData.getMapPosition().getCol());
+        if (key != -1) {
+            addWorker(key);
+        }
+    }
+
+    public int removeWorker(GameBuilding latestData) {
+        int key = foundBuildingOnMapInt(latestData.getMapPosition().getRow(), latestData.getMapPosition().getCol());
+        if (key != -1) {
+            takeWorker(key);
+            return 0;
+        }
+        return -1;
+    }
+
+    public String getWorkersCountAt(int row, int col) {
+        int key = foundBuildingOnMapInt(row, col);
+        return String.valueOf(Buildings.get(key).people);
     }
 }

@@ -84,11 +84,12 @@ public class GameBuilding{
         people--;
     }
     
-    public void takeWorker() throws Exception {
-        if(getWorkers() == 0){
-            throw new Exception();
+    public boolean takeWorker(){
+        if (people > 0) {
+            removeWorker();
+            return true;
         }
-        removeWorker();
+        return false;
     }
     
     double collect() {

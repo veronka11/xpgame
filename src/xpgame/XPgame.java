@@ -268,6 +268,7 @@ public class XPgame {
     }
 
     public void updateStats() {
+        System.out.println(GBC.getStats());
         statistics.setText(GBC.getStats());
         mainWindow.revalidate();
         mainWindow.repaint();
@@ -290,5 +291,9 @@ public class XPgame {
             selectedBuildingButton.deselect();
             gHandler.deselect();
         }
+    }
+
+    public String GUIgetWorkersAt(int row, int col) {
+        return String.valueOf(GBC.getWorkersCountAt(row, col));
     }
 }

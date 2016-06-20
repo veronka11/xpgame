@@ -63,7 +63,7 @@ public class FunctionPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (isSelected()) {
-                    //gHandler.addWorkerToBuilding(latestData.getId());
+                    gHandler.addWorkerToBuilding(latestData);
                 }
             }
         });
@@ -73,7 +73,7 @@ public class FunctionPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (isSelected()) {
-                    //gHandler.removeWorkerFromBuilding(latestData.getId());
+                    gHandler.removeWorkerFromBuilding(latestData);
                 }
             }
         });
@@ -84,7 +84,7 @@ public class FunctionPanel extends JPanel {
                 super.mouseClicked(e);
                 if (isSelected()) {
                     System.out.println("DESTROY BUILDING @ FunctionPanel.class");
-                    gh.destroyBuilding(latestData);
+                    gHandler.destroyBuilding(latestData);
                     clearBuilding();
                     hidePanel();
                 }

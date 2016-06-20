@@ -4,8 +4,6 @@ import Buildings.GameBuilding;
 import Buildings.GameBuildingController;
 import xpgame.graphics.GameCanvasPanel;
 
-import java.util.logging.Handler;
-
 /**
  *
  * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
@@ -15,12 +13,6 @@ public class GameHandler {
     private GameCanvasPanel mGameCanvasPanel;
     private XPgame mXPgame;
     private int selectedBuilding = -1;
-
-    public GameHandler(XPgame xpg, GameBuildingController gameBuildingController, GameCanvasPanel gameCanvasPanel) {
-        mGameBuildingController = gameBuildingController;
-        mGameCanvasPanel = gameCanvasPanel;
-        mXPgame = xpg;
-    }
 
     public GameHandler(XPgame xpg, GameBuildingController gameBuildingController) {
         mGameBuildingController = gameBuildingController;
@@ -71,6 +63,22 @@ public class GameHandler {
         System.out.println("DESTROY BUILDING @ GameHandler.class");
         mGameBuildingController.destroy(latestData);
         mGameCanvasPanel.destroyAt(latestData.getMapPosition());
+    }
+
+    public void addWorkerToBuilding(GameBuilding latestData) {
+        mGameBuildingController.addWorker(latestData);
+        // TODO update stats
+        mGameCanvasPanel.render();
+        notifyOnUpdate();
+    }
+
+    public void removeWorkerFromBuilding(GameBuilding latestData) {
+        if (mGameBuildingController.removeWorker(latestData) == -1) {
+            // TODO GUI WARNING -> can NOT remove worker from this building
+        }
+        // TODO update stats
+        mGameCanvasPanel.render();
+        notifyOnUpdate();
     }
 
     @Override

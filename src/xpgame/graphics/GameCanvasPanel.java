@@ -89,13 +89,18 @@ public class GameCanvasPanel extends JPanel{
         g.drawImage(grassSprite, 0, 0, Color.green, this);
         g.drawImage(grassSprite, 512, 0, Color.green, this);
 
-        g.setColor(new Color(255,255,255,20));
         for (int row = 0; row < buildingsMap.length; row++) {
             for (int col = 0; col < buildingsMap[row].length; col++) {
+                g.setColor(new Color(255,255,255,20));
                 g.drawRect(col * 80, row * 80, 80, 80);
                 if (buildingsMap[row][col] != -1) {
                     // Draw house
                     g.drawImage(buildingsSprite[buildingsMap[row][col]], col * 80, row * 80, this);
+                    g.setColor(Color.green);
+                    String workingPeople = xpgameRef.GUIgetWorkersAt(row, col);
+                    if (!workingPeople.equals("0")) {
+                        g.drawString(workingPeople, col * 80 + 5, row * 80 + 20);
+                    }
                 }
             }
         }
@@ -109,6 +114,11 @@ public class GameCanvasPanel extends JPanel{
 
     public void destroyAt(MapPosition mapPosition) {
         this.buildingsMap[mapPosition.getRow()][mapPosition.getCol()] = EMPTY;
+        repaint();
+        revalidate();
+    }
+
+    public void render() {
         repaint();
         revalidate();
     }
