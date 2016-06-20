@@ -202,4 +202,23 @@ public  class GameBuildingController {
 
         return null;
     }
+
+    public int foundBuildingOnMapInt(int row, int col) {
+        Iterator it = Buildings.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry) it.next();
+            GameBuilding result = (GameBuilding)pair.getValue();
+            if (result.isAt(row, col)) {
+                return (int) pair.getKey();
+            }
+        }
+        return -1;
+    }
+
+    public void destroy(GameBuilding latestData) {
+        int key = foundBuildingOnMapInt(latestData.getMapPosition().getRow(), latestData.getMapPosition().getCol());
+        if (key != -1) {
+            Buildings.remove(key);
+        }
+    }
 }

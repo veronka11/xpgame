@@ -121,4 +121,8 @@ public class GameBuilding{
     public boolean isAt(int row, int col) {
         return ((this.mapPosition.getRow() == row) && (this.mapPosition.getCol() == col));
     }
+
+    public MapPosition getMapPosition() {
+        return this.mapPosition;
+    }
 }

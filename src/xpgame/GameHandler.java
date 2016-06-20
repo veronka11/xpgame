@@ -1,5 +1,6 @@
 package xpgame;
 
+import Buildings.GameBuilding;
 import Buildings.GameBuildingController;
 import xpgame.graphics.GameCanvasPanel;
 
@@ -18,6 +19,11 @@ public class GameHandler {
     public GameHandler(XPgame xpg, GameBuildingController gameBuildingController, GameCanvasPanel gameCanvasPanel) {
         mGameBuildingController = gameBuildingController;
         mGameCanvasPanel = gameCanvasPanel;
+        mXPgame = xpg;
+    }
+
+    public GameHandler(XPgame xpg, GameBuildingController gameBuildingController) {
+        mGameBuildingController = gameBuildingController;
         mXPgame = xpg;
     }
 
@@ -59,5 +65,20 @@ public class GameHandler {
 
     public void deselect() {
         selectedBuilding = -1;
+    }
+
+    public void destroyBuilding(GameBuilding latestData) {
+        System.out.println("DESTROY BUILDING @ GameHandler.class");
+        mGameBuildingController.destroy(latestData);
+        mGameCanvasPanel.destroyAt(latestData.getMapPosition());
+    }
+
+    @Override
+    public String toString() {
+        return "GameHandler initialized!! SelectedBuilding = " + selectedBuilding + " :: References: XPGAME " + String.valueOf(mXPgame != null) + " | GameCanvasPanel " + String.valueOf(mGameCanvasPanel != null) + " | GameBuildingController " + String.valueOf(mGameBuildingController != null) + " |";
+    }
+
+    public void assignGameCanvas(GameCanvasPanel gameCanvas) {
+        mGameCanvasPanel = gameCanvas;
     }
 }

@@ -1,5 +1,6 @@
 package xpgame.graphics;
 
+import entity.MapPosition;
 import xpgame.XPgame;
 
 import javax.imageio.ImageIO;
@@ -104,5 +105,11 @@ public class GameCanvasPanel extends JPanel{
     public void assignBuilding(int row, int col, int selectedBuilding) {
         buildingsMap[row][col] = selectedBuilding;
         repaint();
+    }
+
+    public void destroyAt(MapPosition mapPosition) {
+        this.buildingsMap[mapPosition.getRow()][mapPosition.getCol()] = EMPTY;
+        repaint();
+        revalidate();
     }
 }

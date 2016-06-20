@@ -60,11 +60,13 @@ public class XPgame {
             timer = new GameTimer(GBC);
             gameThread = new Thread(timer);
 
-            // Draw GUI
-            renderGame();
 
             // Assign handler
-            gHandler = new GameHandler(this, GBC, gameCanvas);
+            gHandler = new GameHandler(this, GBC);
+
+
+            // Draw GUI
+            renderGame();
 
             // Start game
             //gameThread.start();
@@ -161,6 +163,7 @@ public class XPgame {
 
         // GameCanvas passes reference of Buildings length
         gameCanvas = new GameCanvasPanel(this, BuildingData.size());
+        gHandler.assignGameCanvas(gameCanvas);
         pane.add(gameCanvas);
 
         // Control Panel for upgrades and buildings

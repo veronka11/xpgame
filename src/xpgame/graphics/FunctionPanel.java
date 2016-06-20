@@ -45,6 +45,8 @@ public class FunctionPanel extends JPanel {
         add(removeWorkerBtn, BorderLayout.LINE_END);
         add(destroyBtn, BorderLayout.PAGE_END);
 
+        System.out.println(gHandler.toString());
+
         // Listeners
         upgradeBtn.addMouseListener(new MouseAdapter() {
             @Override
@@ -81,7 +83,8 @@ public class FunctionPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (isSelected()) {
-                    //gHandler.destroyBuilding(latestData.getId());
+                    System.out.println("DESTROY BUILDING @ FunctionPanel.class");
+                    gh.destroyBuilding(latestData);
                     clearBuilding();
                     hidePanel();
                 }
@@ -111,6 +114,6 @@ public class FunctionPanel extends JPanel {
     }
 
     private boolean isSelected() {
-        return !(latestData != null);
+        return (latestData != null);
     }
 }
