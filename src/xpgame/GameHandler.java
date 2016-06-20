@@ -49,6 +49,7 @@ public class GameHandler {
 
     private void displayDetailOfBuilding(int row, int col) {
         mXPgame.displayInfoOf(row, col);
+        mGameCanvasPanel.select(row, col);
     }
 
     public void notifyOnUpdate() {
@@ -57,17 +58,18 @@ public class GameHandler {
 
     public void deselect() {
         selectedBuilding = -1;
+        mGameCanvasPanel.deselect();
     }
 
     public void destroyBuilding(GameBuilding latestData) {
         System.out.println("DESTROY BUILDING @ GameHandler.class");
         mGameBuildingController.destroy(latestData);
         mGameCanvasPanel.destroyAt(latestData.getMapPosition());
+        notifyOnUpdate();
     }
 
     public void addWorkerToBuilding(GameBuilding latestData) {
         mGameBuildingController.addWorker(latestData);
-        // TODO update stats
         mGameCanvasPanel.render();
         notifyOnUpdate();
     }
@@ -76,7 +78,6 @@ public class GameHandler {
         if (mGameBuildingController.removeWorker(latestData) == -1) {
             // TODO GUI WARNING -> can NOT remove worker from this building
         }
-        // TODO update stats
         mGameCanvasPanel.render();
         notifyOnUpdate();
     }

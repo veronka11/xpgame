@@ -21,13 +21,16 @@ public class GameCanvasPanel extends JPanel{
     private BufferedImage[] buildingsSprite;
     private int[][] buildingsMap;
     private XPgame xpgameRef;
+    private int sRow, sCol;
     public final static int EMPTY = -1;
     public final static String BUILDING_PREFIX = "obr";
     public final static String IMAGE_SUFFIX = ".png";
 
+
     public GameCanvasPanel (XPgame xpg, int buildingsLength) {
         setOpaque(true);
         xpgameRef = xpg;
+        sRow = sCol = -1;
         // Fetch sprites
         fetchMapSprites(buildingsLength);
         try {
@@ -91,7 +94,11 @@ public class GameCanvasPanel extends JPanel{
 
         for (int row = 0; row < buildingsMap.length; row++) {
             for (int col = 0; col < buildingsMap[row].length; col++) {
-                g.setColor(new Color(255,255,255,20));
+                if (row == sRow && col == sCol && !canBuildAt(row, col)) {
+                    g.setColor(new Color(255, 255, 255,100));
+                } else {
+                    g.setColor(new Color(255,255,255,20));
+                }
                 g.drawRect(col * 80, row * 80, 80, 80);
                 if (buildingsMap[row][col] != -1) {
                     // Draw house
@@ -121,5 +128,17 @@ public class GameCanvasPanel extends JPanel{
     public void render() {
         repaint();
         revalidate();
+    }
+
+    public void deselect() {
+        sRow = -1;
+        sCol = -1;
+        render();
+    }
+
+    public void select(int row, int col) {
+        sRow = row;
+        sCol = col;
+        render();
     }
 }
