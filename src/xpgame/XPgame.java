@@ -90,7 +90,8 @@ public class XPgame {
         BoxLayout boxlayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
         panel.setLayout(boxlayout);
 
-        JLabel logo = new JLabel("XPgame");
+        String logoPath = this.getClass().getClassLoader().getResource("xpgame/resources/logo.png").getPath();
+        JLabel logo = new JLabel(new ImageIcon(logoPath));
         JButton startBtn = new JButton("Start Game");
         JButton loadBtn = new JButton("Load Game");
         JButton exitBtn = new JButton("Exit Game");

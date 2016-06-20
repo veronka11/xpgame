@@ -7,7 +7,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by Stiffix on 16/06/16.
+ *
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class ControlPanel extends JPanel {
     private XPgame xpgameref;

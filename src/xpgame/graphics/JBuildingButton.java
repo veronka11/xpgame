@@ -8,7 +8,8 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
- * Created by Stiffix on 18/06/16.
+ *
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class JBuildingButton extends JButton {
 

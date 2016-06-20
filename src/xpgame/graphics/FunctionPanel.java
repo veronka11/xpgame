@@ -11,7 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by Stiffix on 19/06/16.
+ *
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class FunctionPanel extends JPanel {
     private JButton upgradeBtn, addWorkerBtn, removeWorkerBtn, destroyBtn;

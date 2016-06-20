@@ -6,7 +6,8 @@ import xpgame.graphics.GameCanvasPanel;
 import java.util.logging.Handler;
 
 /**
- * Created by Stiffix on 16/06/16.
+ *
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class GameHandler {
     private GameBuildingController mGameBuildingController;

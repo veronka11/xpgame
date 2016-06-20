@@ -1,6 +1,5 @@
 package xpgame.graphics;
 
-import Buildings.GameBuildingController;
 import xpgame.XPgame;
 
 import javax.imageio.ImageIO;
@@ -13,7 +12,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Stiffix on 16/06/16.
+ *
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class GameCanvasPanel extends JPanel{
     private BufferedImage grassSprite;

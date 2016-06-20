@@ -1,7 +1,8 @@
 package xpgame;
 
 /**
- * Created by Stiffix on 16/06/16.
+ *
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class NullNameBuildingUpgradeException extends Exception {
     public NullNameBuildingUpgradeException(String message) {

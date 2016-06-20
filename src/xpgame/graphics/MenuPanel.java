@@ -10,7 +10,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Stiffix on 16/06/16.
+ *
+ * @author Stefan Gerboc, Ondrej Husar, Veronika Krajcovicova, Peter Zapalac
  */
 public class MenuPanel extends JPanel {
     public MenuPanel() {
@@ -25,8 +26,7 @@ public class MenuPanel extends JPanel {
         super.paintComponent(g);
         BufferedImage img = null;
         try {
-            // TODO remove absolute path
-            img = ImageIO.read(new File("/Users/newnew/IdeaProjects/latest_extremne_programovanie/xpgame/src/xpgame/resources/main_background.jpg"));
+            img = ImageIO.read(new File(this.getClass().getClassLoader().getResource("xpgame/resources/main_background.jpg").getPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
