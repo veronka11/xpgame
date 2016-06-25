@@ -1,5 +1,7 @@
 package dataloader;
 
+import Buildings.GameBuilding;
+import Buildings.GameBuildingController;
 import entity.Building;
 import entity.BuildingUpgrade;
 import xpgame.Commodity;
@@ -16,7 +18,7 @@ public class JSONloader {
 
     private final static String PATH_TO_SAVE = System.getProperty("user.dir") + "/savedata";
 
-    public static  boolean JSONsaveBuildings(HashMap<Integer, Building> data) {
+    public static  boolean JSONsaveBuildings(HashMap<Integer, Building> data, HashMap<Integer, GameBuilding> gameData, HashMap<Commodity, Double> resourcesmap, int people) {
         System.out.println(PATH_TO_SAVE);
         System.out.println(Commodity.FOOD.ordinal());
 
@@ -71,7 +73,29 @@ public class JSONloader {
             // End of Array Buildings and closing object }
             gen.writeEnd();
 
-            // TODO: Game status - commodities
+            gen.writeStartObject("saved_data")
+                    .writeStartObject("stats");
+                    gen.write(Commodity.FOOD.name(), resourcesmap.get(Commodity.FOOD))
+                            .write(Commodity.WOOD.name(), resourcesmap.get(Commodity.WOOD))
+                            .write(Commodity.STONE.name(), resourcesmap.get(Commodity.STONE))
+                            .write(Commodity.GOLD.name(), resourcesmap.get(Commodity.GOLD))
+                            .write("PEOPLE", people);
+                    gen.writeEnd(); // END OF OBJECT [stats]
+                    gen.writeStartArray("builded_buildings");
+                        Iterator itt = gameData.entrySet().iterator();
+                        while (itt.hasNext()) {
+                            Map.Entry pair = (Map.Entry) itt.next();
+                            GameBuilding gb = (GameBuilding) pair.getValue();
+                            gen.writeStartObject();     // Gamebuilding object
+                                gen.write("id", gb.id)
+                                        .write("positionRow", gb.getMapPosition().getRow())
+                                        .write("positionCol", gb.getMapPosition().getCol())
+                                        .write("people", gb.people)
+                                        .write("level", gb.level);
+                            gen.writeEnd();             // End of gamebuilding object
+                        }
+                    gen.writeEnd(); // End of array [builded_buildings]
+            gen.writeEnd();
 
             gen.writeEnd();
             gen.close();

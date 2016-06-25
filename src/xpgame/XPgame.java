@@ -9,17 +9,22 @@ import Buildings.GameBuilding;
 import Buildings.GameBuildingController;
 import dataloader.JSONloader;
 import entity.Building;
+import javafx.scene.control.TextInputDialog;
+import oracle.jrockit.jfr.JFR;
 import xpgame.graphics.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -140,8 +145,23 @@ public class XPgame {
 
     }
 
+    private void savePrompt() {
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        int response = JOptionPane.showConfirmDialog(null, "Do you want to save game?", "Save game",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            System.out.println("No button clicked");
+        } else if (response == JOptionPane.YES_OPTION) {
+            System.out.println("Yes button clicked");
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            System.out.println("JOptionPane closed");
+        }
+    }
+
     private void renderGame() {
         Container pane = mainWindow.getContentPane();
+
+
 
 
         // Stats panel for commodity statistics
@@ -233,6 +253,11 @@ public class XPgame {
             }
         });
 
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new MyDispatcher());
+
+        mainWindow.setFocusTraversalKeysEnabled(false);
+        mainWindow.setFocusable(true);
         mainWindow.revalidate();
         mainWindow.repaint();
     }
@@ -292,5 +317,15 @@ public class XPgame {
 
     public String GUIgetWorkersAt(int row, int col) {
         return String.valueOf(GBC.getWorkersCountAt(row, col));
+    }
+
+    private class MyDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == 27) {
+                savePrompt();
+            }
+            return false;
+        }
     }
 }
