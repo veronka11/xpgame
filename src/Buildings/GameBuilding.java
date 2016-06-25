@@ -92,11 +92,19 @@ public class GameBuilding{
         return false;
     }
     
-    double collect() {
+    int[] collect() throws Exception {
         if(!isProductive){
-            return upgradeRate;
+            return null;
         }
-        return people * upgradeRate;
+        if (this.production == null) throw new Exception("No production data is set");
+        int[] newCollect = this.production.clone();
+        double collectionRate = people * upgradeRate;
+        for (int i = 0; i < newCollect.length; i++) {
+            newCollect[i] = (int)(newCollect[i] * collectionRate);
+            System.out.println(newCollect[i] + " production -> " + this.production[0] + ", " + this.production[1] + ", " + this.production[2] + ", " + this.production[3]);
+        }
+
+        return newCollect;
     }
 
     int getId() {

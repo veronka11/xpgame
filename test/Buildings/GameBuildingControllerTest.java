@@ -119,7 +119,12 @@ public class GameBuildingControllerTest {
             BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 1.2);
             Building b = new Building(1, "test_name");
             b.setUpgrade(bu);
-            b.setPrice(new int[]{1, 1, 1, 1});
+            try {
+                b.setPrice(new int[]{1, 1, 1, 1});
+            } catch (Exception e ) {
+                fail("Unexpected exception thrown.");
+            }
+
             HashMap<Integer, Building> building_data = new HashMap<>();
             building_data.put(0, b);
 
@@ -142,7 +147,12 @@ public class GameBuildingControllerTest {
             BuildingUpgrade bu = new BuildingUpgrade("test_upgrade", 1, 1.2);
             Building b = new Building(1, "test_name");
             b.setUpgrade(bu);
-            b.setPrice(new int[]{1, 1, 1, 1});
+            try {
+                b.setPrice(new int[]{1, 1, 1, 1});
+            } catch (Exception e) {
+                fail("Unexpected exception thrown.");
+            }
+
             HashMap<Integer, Building> building_data = new HashMap<>();
             building_data.put(0, b);
 

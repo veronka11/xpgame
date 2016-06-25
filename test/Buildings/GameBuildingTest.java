@@ -32,7 +32,10 @@ public class GameBuildingTest {
 
         correct_b = new Building(2, "test_name2");
         correct_b.setUpgrade(bu);
-        correct_b.setPrice(new int[] {1, 2, 3, 4});
+        try {
+            correct_b.setPrice(new int[] {1, 2, 3, 4});
+        } catch (Exception e) {}
+
     }
 
 
@@ -114,34 +117,6 @@ public class GameBuildingTest {
     }
 
     /**
-     * takeWorker tests
-     */
-
-    @Test
-    public void testTakeWorkersThrowsExceptionIfThereAre0Available() {
-        try {
-            GameBuilding bg = new GameBuilding(correct_b, 1);
-
-            assertEquals(0, bg.getWorkers());
-            bg.takeWorker();
-            fail("Exception not thrown.");
-        }
-        catch (Exception e){
-            assertTrue(true);
-        }
-    }
-
-    @Test
-    public void testTakeWorkersTakesWorkerAvailable() throws Exception {
-        GameBuilding bg = new GameBuilding(correct_b, 1);
-        assertEquals(0, bg.getWorkers());
-        bg.addWorker();
-        assertEquals(1, bg.getWorkers());
-        bg.takeWorker();
-        assertEquals(0, bg.getWorkers());
-    }
-
-    /**
      * getPriceForNextLvl tests
      */
     @Test
@@ -180,17 +155,6 @@ public class GameBuildingTest {
     /**
      * collect tests
      */
-    @Test
-    public void collectThrowsExceptionIsProductionDataIsNotSet() {
-        GameBuilding gb = new GameBuilding(correct_b, 1);
-        try {
-            gb.collect();
-            fail("Exception not thrown.");
-        }
-        catch (Exception e){
-            assertTrue(true);
-        }
-    }
 
     @Test
     public void collectWorksIsProductionDataIsSet() {

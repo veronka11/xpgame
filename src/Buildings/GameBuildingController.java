@@ -115,29 +115,35 @@ public  class GameBuildingController {
         }
     }
 
+    public void collectResources() {
+        for (GameBuilding building : Buildings.values()) {
+            if (building.isProductive()) {
+                try {
+                    int[] producedCommodities = building.collect();
+                    addFood(producedCommodities[Commodity.FOOD.ordinal()]);
+                    addGold(producedCommodities[Commodity.GOLD.ordinal()]);
+                    addStone(producedCommodities[Commodity.STONE.ordinal()]);
+                    addWood(producedCommodities[Commodity.WOOD.ordinal()]);
+                } catch (Exception e) {}
+            }
+        }
+    }
+
     public void addWorker(int id){
         if(people > 0) {
             Buildings.get(id).addWorker();
             people--;
-        }
-        /*
-        if((people - workingPeople) > 0){
-            Buildings.get(id).addWorker();
             workingPeople++;
-            people++;
         }
-        */
+
     }
 
     public void takeWorker(int id){
         if (Buildings.get(id).takeWorker()) {
             people++;
+            workingPeople--;
         }
-        /*
-        Buildings.get(id).takeWorker();
-        //workingPeople--;
-        people--;
-        */
+
     }
 
     public boolean isEnoughResources(int[] price) {

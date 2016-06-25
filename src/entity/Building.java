@@ -15,7 +15,8 @@ public class Building {
         this.upgrade = null;
     }
     
-    public void setPrice(int[] priceData) {
+    public void setPrice(int[] priceData) throws Exception {
+        if (priceData.length != 4) throw new Exception("Price data size can't be size:" + priceData.length + ", expecting 4.");
         this.price = priceData;
     }
     
@@ -25,6 +26,9 @@ public class Building {
     
     public void setProduction(int[] productData) {
         this.production = productData;
+        if (productData.length != 0) {
+            this.productivity = true;
+        }
     }
 
     public int getId() {
@@ -52,12 +56,17 @@ public class Building {
     }
     
     public String toString() {
-        return ("Building name:" + this.name +
-                "| Price:" + this.price[Commodity.FOOD.ordinal()] +
-                "-" + this.price[Commodity.GOLD.ordinal()] +
-                "-" + this.price[Commodity.STONE.ordinal()] +
-                "-" + this.price[Commodity.WOOD.ordinal()] +
-                "| Upgrade: " + this.upgrade.getName());
+        StringBuilder sb = new StringBuilder();
+        sb.append("Building name:" + this.name);
+        sb.append("| Price:" + this.price[Commodity.FOOD.ordinal()]);
+        sb.append("-" + this.price[Commodity.GOLD.ordinal()]);
+        sb.append("-" + this.price[Commodity.STONE.ordinal()]);
+        sb.append("-" + this.price[Commodity.WOOD.ordinal()]);
+        if (this.upgrade != null) {
+            sb.append("| Upgrade: " + this.upgrade.getName());
+        }
+
+        return sb.toString();
     }
 
     public void setUpgrade(BuildingUpgrade tempBuildingUpgrade) {

@@ -7,7 +7,7 @@ public class BuildingUpgrade {
     private final double rate, levelIncrease;
     
     public BuildingUpgrade(String name, double rate, double levelIncrease) throws NullNameBuildingUpgradeException {
-        if (name == null) throw new NullNameBuildingUpgradeException("Building Upgrade parameter name cannot be null!");
+        if (name == null || name == "") throw new NullNameBuildingUpgradeException("Building Upgrade parameter name cannot be null!");
         this.name = name;
         this.rate = rate;
         this.levelIncrease = levelIncrease;

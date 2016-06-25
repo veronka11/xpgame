@@ -83,7 +83,7 @@ public class FunctionPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (isSelected()) {
-                    System.out.println("DESTROY BUILDING @ FunctionPanel.class");
+                    //System.out.println("DESTROY BUILDING @ FunctionPanel.class");
                     gHandler.destroyBuilding(latestData);
                     clearBuilding();
                     hidePanel();

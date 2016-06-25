@@ -56,20 +56,19 @@ public class XPgame {
             mainWindow.remove(menuPanel);
             mainWindow.revalidate();
             mainWindow.repaint();
-            // Init timer
-            timer = new GameTimer(GBC);
-            gameThread = new Thread(timer);
-
 
             // Assign handler
             gHandler = new GameHandler(this, GBC);
+            // Init timer
+            timer = new GameTimer(GBC, gHandler);
+            gameThread = new Thread(timer);
 
 
             // Draw GUI
             renderGame();
 
             // Start game
-            //gameThread.start();
+            gameThread.start();
 
 
 
@@ -268,7 +267,7 @@ public class XPgame {
     }
 
     public void updateStats() {
-        System.out.println(GBC.getStats());
+        //System.out.println(GBC.getStats());
         statistics.setText(GBC.getStats());
         mainWindow.revalidate();
         mainWindow.repaint();
@@ -278,9 +277,7 @@ public class XPgame {
         GameBuilding data = GBC.foundBuildingOnMap(row, col);
         if (data == null) {
             functionPanel.hidePanel();
-            System.out.println("Empty place");
         } else {
-            System.out.println(data.Name);
             functionPanel.renderPanel(data);
         }
 

@@ -127,7 +127,10 @@ public class JSONloader {
             for (int i = 0; i < tempPrice.size(); i++) {
                 price[i] = tempPrice.getInt(i);
             }
-            tempBuilding.setPrice(price);
+            try {
+                tempBuilding.setPrice(price);
+            } catch (Exception e) { }
+
 
             // Production
             productivity = building.getBoolean("productive");

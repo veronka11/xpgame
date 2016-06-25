@@ -25,7 +25,7 @@ public class GameHandler {
 
     public void buildBuilding(int row, int col) {
 
-        System.out.println("SelectedBuilding[buildBuilding()] -> " + selectedBuilding);
+        //System.out.println("SelectedBuilding[buildBuilding()] -> " + selectedBuilding);
 
         // Not selected
         if (selectedBuilding == -1) {
@@ -39,10 +39,10 @@ public class GameHandler {
                 mGameCanvasPanel.assignBuilding(row, col, selectedBuilding);
                 notifyOnUpdate();
             } else {
-                System.out.println("Not enough commodities!");
+                //System.out.println("Not enough commodities!");
             }
         } else {
-            System.out.println("You can NOT build here!");
+            //System.out.println("You can NOT build here!");
         }
         selectedBuilding = -1;
     }
@@ -62,7 +62,7 @@ public class GameHandler {
     }
 
     public void destroyBuilding(GameBuilding latestData) {
-        System.out.println("DESTROY BUILDING @ GameHandler.class");
+        //System.out.println("DESTROY BUILDING @ GameHandler.class");
         mGameBuildingController.destroy(latestData);
         mGameCanvasPanel.destroyAt(latestData.getMapPosition());
         notifyOnUpdate();

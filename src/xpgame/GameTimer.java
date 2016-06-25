@@ -13,10 +13,12 @@ import java.util.logging.Logger;
 public class GameTimer implements Runnable {
     private boolean running;
     private GameBuildingController mGameBuidlingController;
+    private GameHandler mGameHandler;
     private final static int TIMER_TICK = 1000;
 
-    public GameTimer(GameBuildingController gbcRef) {
+    public GameTimer(GameBuildingController gbcRef, GameHandler gameHandler) {
         this.running = true;
+        this.mGameHandler = gameHandler;
         this.mGameBuidlingController = gbcRef;
     }
 
@@ -27,7 +29,8 @@ public class GameTimer implements Runnable {
     @Override
     public void run() {
         while(running){
-            mGameBuidlingController.updateResources();
+            mGameBuidlingController.collectResources();
+            mGameHandler.notifyOnUpdate();
             try {
                 Thread.sleep(TIMER_TICK);
             } catch (InterruptedException ex) {
