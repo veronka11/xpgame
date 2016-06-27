@@ -22,6 +22,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Optional;
@@ -75,14 +76,28 @@ public class XPgame {
             // Start game
             gameThread.start();
 
-
-
         } catch (GameInicializaitonFailedException e) {
             e.printStackTrace();
             // TODO handle exception to GUI
         }
-
-
+    }
+    
+    public GameBuildingController getGBC(){
+        return GBC;
+    }
+    
+    private void loadGame(MenuPanel menuPanel, ArrayList<Object> data) {
+            
+        initLoadGameData(data);
+        mainWindow.remove(menuPanel);
+        mainWindow.revalidate();
+        mainWindow.repaint();
+        gHandler = new GameHandler(this, GBC);
+        timer = new GameTimer(GBC, gHandler);
+        gameThread = new Thread(timer);   
+        renderGame();
+        gameThread.start();
+        
     }
 
     public void renderMenu() {
@@ -119,7 +134,14 @@ public class XPgame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                // TODO dialog file open window
+                try {
+                    // TODO dialog file open window
+                    ArrayList<Object> data = JSONloader.JSONloadSavedGame();
+                    loadGame(panel, data);
+                    
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(XPgame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -153,6 +175,8 @@ public class XPgame {
             System.out.println("No button clicked");
         } else if (response == JOptionPane.YES_OPTION) {
             System.out.println("Yes button clicked");
+            JSONloader.JSONsaveBuildings(BuildingData, GBC.getBuildings(),GBC.getResourcesMap(),GBC.getPeople());
+            
         } else if (response == JOptionPane.CLOSED_OPTION) {
             System.out.println("JOptionPane closed");
         }
@@ -260,6 +284,7 @@ public class XPgame {
         mainWindow.setFocusable(true);
         mainWindow.revalidate();
         mainWindow.repaint();
+        
     }
 
     private void initData() throws GameInicializaitonFailedException {
@@ -269,6 +294,14 @@ public class XPgame {
         } catch (FileNotFoundException e) {
             throw new GameInicializaitonFailedException(e.getMessage());
         }
+    }
+    
+    private void initLoadGameData(ArrayList<Object> data) {
+        BuildingData = (HashMap<Integer, Building>) data.get(0);
+        GBC = new GameBuildingController(BuildingData);
+        GBC.setResourcesMap((HashMap<Commodity, Double>) data.get(1));
+        GBC.setBuildings((HashMap<Integer, GameBuilding>) data.get(2));
+        GBC.setPeople((int) data.get(3));
     }
 
     /*

@@ -19,8 +19,12 @@
       "productive" :  false,
       "production" : [],
       "upgrade": {
-      }
+          "upgrade_name" :    "",
+          "upgrade_rate" :    0,
+          "upgrade_level_increase" : 0
+        }
     },
+    
     {
       "id" : 2,
       "name":         "Meat fabric",

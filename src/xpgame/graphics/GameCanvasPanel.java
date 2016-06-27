@@ -1,5 +1,7 @@
 package xpgame.graphics;
 
+import Buildings.GameBuilding;
+import Buildings.GameBuildingController;
 import entity.MapPosition;
 import xpgame.XPgame;
 
@@ -31,6 +33,7 @@ public class GameCanvasPanel extends JPanel{
     public GameCanvasPanel (XPgame xpg, int buildingsLength) {
         setOpaque(true);
         xpgameRef = xpg;
+        GameBuildingController GBCref=xpgameRef.getGBC();
         sRow = sCol = -1;
         // Fetch sprites
         fetchMapSprites(buildingsLength);
@@ -44,9 +47,16 @@ public class GameCanvasPanel extends JPanel{
         buildingsMap = new int[5][10];
         for (int i = 0; i < buildingsMap.length; i++) {
             for (int j = 0; j < buildingsMap[i].length; j++) {
-                buildingsMap[i][j] = EMPTY;
+                GameBuilding foundBuildingOnMap = GBCref.foundBuildingOnMap(i, j);
+                if(foundBuildingOnMap ==null){
+                    buildingsMap[i][j] = EMPTY;
+                }else{
+                    buildingsMap[i][j] = foundBuildingOnMap.id;
+                }
             }
         }
+        
+//        updateAfterLoad();
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -67,6 +77,11 @@ public class GameCanvasPanel extends JPanel{
         });
 
     }
+    
+//    private void updateAfterLoad(){
+//        GameBuildingController
+//    
+//    }
 
     public boolean canBuildAt(int row, int col) {
         return (buildingsMap[row][col] == -1);

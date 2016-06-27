@@ -18,6 +18,26 @@ public  class GameBuildingController {
     private HashMap<Integer, GameBuilding> Buildings;
     private HashMap<Commodity, Double> resourcesMap;
     private int people, workingPeople;
+    
+    public HashMap<Integer, Building> getBuildingsData(){
+        return BuildingData;
+    }
+    
+    public HashMap<Integer, GameBuilding> getBuildings(){
+        return Buildings;
+    }
+    
+    public void setBuildings(HashMap<Integer, GameBuilding> buildings){
+         Buildings = buildings;
+    }
+    
+    public HashMap<Commodity, Double> getResourcesMap(){
+        return resourcesMap;
+    }
+    
+    public void setResourcesMap(HashMap<Commodity, Double> rm){
+        resourcesMap = rm;
+    }
 
     public GameBuildingController(HashMap<Integer, Building> BuildingData) {
         this.BuildingData = BuildingData;
@@ -43,6 +63,9 @@ public  class GameBuildingController {
     }
     public int getPeople() {
         return people;
+    }
+    public void setPeople(int p) {
+         people=p;
     }
     public int getWorkingPeople() {
         return workingPeople;

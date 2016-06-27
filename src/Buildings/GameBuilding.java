@@ -134,4 +134,12 @@ public class GameBuilding{
     public MapPosition getMapPosition() {
         return this.mapPosition;
     }
+
+    public void setMapPosition(MapPosition mapPosition) {
+        this.mapPosition = mapPosition;
+    }
+    
+    public void setWorkers(int n){
+        people=n;
+    }
 }
